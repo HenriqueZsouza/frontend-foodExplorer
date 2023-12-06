@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import { ThemeProvider } from 'styled-components'
-
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 import ThemeDefault from '../../styles/theme'
 import GlobalStyles from '../../styles/global'
 import { Container, Form, Logo } from "./styles"
 
-
-export const SignUp = () => {
+export const SignIn = () => {
 
   const [loading, setLoading] = useState(false)
 
   return (
     <ThemeProvider theme={ThemeDefault}>
       <GlobalStyles />
-      <Container >
+      <Container>
+
         <Logo>
           <div className="logo">
             <svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,17 +26,7 @@ export const SignUp = () => {
         </Logo>
 
         <Form>
-
-          <h2>Crie sua conta</h2>
-
-          <div className="input">
-            <p>Seu nome</p>
-            <Input
-              placeholder="Exemplo: Maria da Silva"
-              type="text"
-            // onChange={e => setName(e.target.value)}
-            />
-          </div>
+          <h2>Faça login</h2>
 
           <div className="input">
             <p>Email</p>
@@ -58,18 +47,17 @@ export const SignUp = () => {
           </div>
 
           <Button
-            title={loading ? "Cadastrando" : "Criar conta"}
-            // onClick={handleSignUp}
+            title={loading ? "Entrando" : "Entrar"}
+            // onClick={handleSignIn}
             disabled={loading}
           />
 
-          <Link className="link" to="/">
-            {/* // onClick={handleBack}> */}
-            Já tenho uma conta
+          <Link className='link' to="/register">
+            Criar conta
           </Link>
 
         </Form>
-      </Container >
-    </ThemeProvider >
+      </Container>
+    </ThemeProvider>
   )
 }
