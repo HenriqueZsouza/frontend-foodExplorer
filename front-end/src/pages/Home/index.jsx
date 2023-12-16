@@ -29,15 +29,15 @@ export const Home = () => {
     setDishes(favorites)
   }
 
-  useEffect(() => {
-    async function fetchDishes() {
-      const response = await api.get(`/dishes?title=${search}`)
-      setDishes(response.data)
-    }
-    fetchDishes()
-  }, [search,
-    // favorites.length === 0 //TIRAR COMENTARIO
-  ])
+  // useEffect(() => {
+  //   async function fetchDishes() {
+  //     const response = await api.get(`/dishes?title=${search}`)
+  //     setDishes(response.data)
+  //   }
+  //   fetchDishes()
+  // }, [search,
+  //   // favorites.length === 0 //TIRAR COMENTARIO
+  // ])
 
 
   return (
