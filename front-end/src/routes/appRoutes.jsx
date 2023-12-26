@@ -5,18 +5,19 @@ import { Home } from '../pages/Home'
 import { Cart } from '../pages/Cart'
 import { Orders } from '../pages/Orders'
 import { Profile } from '../pages/Profile'
-
+import { CreateDish } from '../pages/CreateDish'
 
 export function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/register" element={<SignUp />} />
+      <Route path="/registrar" element={<SignUp />} />
       <Route path="/" element={<SignIn />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/orders" element={<Orders />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/carrinho" element={<Cart />} />
+      <Route path="/pedidos" element={<Orders />} />
+      <Route path="/perfil" element={<Profile />} />
+      <Route path="/criarprato" element={<CreateDish />} />
 
     </Routes>
   )
