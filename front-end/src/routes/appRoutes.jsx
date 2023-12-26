@@ -6,6 +6,7 @@ import { Cart } from '../pages/Cart'
 import { Orders } from '../pages/Orders'
 import { Profile } from '../pages/Profile'
 import { CreateDish } from '../pages/CreateDish'
+import { Details } from '../pages/Details'
 
 export function AppRoutes() {
 
@@ -18,6 +19,8 @@ export function AppRoutes() {
       <Route path="/pedidos" element={<Orders />} />
       <Route path="/perfil" element={<Profile />} />
       <Route path="/criarprato" element={<CreateDish />} />
+      <Route path="/detalhes" element={<Details />} />
+
 
     </Routes>
   )
