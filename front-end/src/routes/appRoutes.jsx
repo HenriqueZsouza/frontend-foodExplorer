@@ -4,6 +4,7 @@ import { SignIn } from '../pages/SignIn'
 import { Home } from '../pages/Home'
 import { Cart } from '../pages/Cart'
 import { Orders } from '../pages/Orders'
+import { Profile } from '../pages/Profile'
 
 
 export function AppRoutes() {
@@ -15,6 +16,7 @@ export function AppRoutes() {
       <Route path="/home" element={<Home />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/orders" element={<Orders />} />
+      <Route path="/profile" element={<Profile />} />
 
     </Routes>
   )
