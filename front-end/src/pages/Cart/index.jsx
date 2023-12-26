@@ -4,10 +4,10 @@ import { BsReceipt } from 'react-icons/bs'
 
 import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
-// import { OrderCard } from '../../components/OrderCard'
+import { OrderCard } from '../../components/OrderCard'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
-import { PageError } from '../../components/PageError'
+// import { PageError } from '../../components/PageError'
 
 import logoPix from '../../assets/pix.svg'
 import cardImg from '../../assets/CreditCard.svg'
@@ -99,12 +99,12 @@ export const Cart = () => {
     const handleNumChange = event => {
         const limit = 16
         setNum(event.target.value.slice(0, limit))
-    };
+    }
 
     const handleCvcChange = event => {
         const limit = 3
         setCvc(event.target.value.slice(0, limit))
-    };
+    }
 
     const [isPixVisible, setIsPixVisible] = useState(false)
     const [isCreditVisible, setIsCreditVisible] = useState(false)
@@ -152,23 +152,21 @@ export const Cart = () => {
             <Container>
                 <Header />
 
-                {/* { */}
-                {/* // user.isAdmin ? */}
+                {/* {
+                    user.isAdmin ?
 
-                <PageError />
+                        <PageError />
 
-                {/* // : */}
+                        : */}
 
                 <Content>
-
-                    <ThemeSlider theme={theme} toggleTheme={toggleTheme} />
 
                     <div className="card-wrapper">
 
                         <div className="order-wrapper">
                             <h2>Meu pedido</h2>
                             <div className="details">
-                                {/* {
+                                {
                                     cart &&
                                     cart.map(item => (
                                         <OrderCard
@@ -176,7 +174,7 @@ export const Cart = () => {
                                             data={item}
                                         />
                                     ))
-                                } */}
+                                }
                             </div>
 
                             <div className="total">
@@ -297,7 +295,8 @@ export const Cart = () => {
                         </PaymentCard>
                     </div>
                 </Content>
-                {/* // } */}
+                {/* } */}
+
                 <Footer />
             </Container>
         </ThemeProvider>

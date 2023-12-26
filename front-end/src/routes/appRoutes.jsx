@@ -13,10 +13,6 @@ export function AppRoutes() {
       <Route path="/" element={<SignIn />} />
       <Route path="/home" element={<Home />} />
       <Route path="/cart" element={<Cart />} />
-
-
-
-
     </Routes>
   )
 }
