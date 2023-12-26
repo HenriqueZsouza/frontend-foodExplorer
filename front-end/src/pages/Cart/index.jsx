@@ -25,7 +25,7 @@ import GlobalStyles from '../../styles/global.js'
 import { Container, Content, PaymentCard } from './styles.js'
 
 
-export function Cart() {
+export const Cart = () => {
     // const { user } = useAuth()
 
     const { cart, total, handleResetCart } = useCart()

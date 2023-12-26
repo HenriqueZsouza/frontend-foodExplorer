@@ -10,6 +10,7 @@ import background from '../../assets/Mask group.png'
 
 import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
+import { Card } from '../../components/Card'
 
 import { useFavorites } from '../../hooks/favorites'
 
@@ -94,9 +95,9 @@ export const Home = () => {
                     <SwiperSlide
                       key={String(index)}
                     >
-                      {/* <Card
-                      data={item}
-                    /> */}
+                      <Card
+                        data={item}
+                      />
                     </SwiperSlide>
                   ))
                 }

@@ -16,39 +16,32 @@ import imagePlaceholder from '../../assets/image-not-found-icon.svg'
 import { Container, Content, PurchaseCard } from './styles.js'
 
 export function Card({ data, ...rest }) {
-    //====load user credentials====//
     // const { user } = useAuth()
 
-    // //====load dish image====//
     // const imageURL = data.image ? `${api.defaults.baseURL}/files/${data.image}` : imagePlaceholder
 
-    // //====load and store favorites====//
-    // const { favorites, addDishToFavorite, removeDishFromFavorite } = useFavorites()
+    const { favorites, addDishToFavorite, removeDishFromFavorite } = useFavorites()
     // const isFavorite = favorites.some((dish) => dish.title === data.title)
 
-    // //====load and store cart====//
-    // const { handleAddDishToCart, paymentAccept } = useCart()
+    const { handleAddDishToCart, paymentAccept } = useCart()
 
-    // //====set quantity initial state====//
-    // const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(1)
 
-    // //====increase quantity====//
-    // const increase = () => {
-    //     if (quantity > 19) {
-    //         alert("Erro: A quantidade máxima é de 20 unidades")
-    //         return;
-    //     }
-    //     setQuantity(count => count + 1)
-    // }
+    const increase = () => {
+        if (quantity > 19) {
+            alert("Erro: A quantidade máxima é de 20 unidades")
+            return;
+        }
+        setQuantity(count => count + 1)
+    }
 
-    // //====decrease quantity====//
-    // const decrease = () => {
-    //     if (quantity < 2) {
-    //         alert("Erro: A quantidade mínima é 1 unidade")
-    //         return;
-    //     }
-    //     setQuantity(count => count - 1)
-    // }
+    const decrease = () => {
+        if (quantity < 2) {
+            alert("Erro: A quantidade mínima é 1 unidade")
+            return;
+        }
+        setQuantity(count => count - 1)
+    }
 
     return (
         <Container {...rest}>
