@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -12,16 +12,17 @@ import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
 import { Card } from '../../components/Card'
 
-import { useFavorites } from '../../hooks/favorites'
+import { useFavorites } from '../../contexts/favorites'
 
+import { api } from '../../services/api'
 import GlobalStyles from '../../styles/global'
 import { Container, Content, Banner } from './styles'
 
 export const Home = () => {
+  const { favorites } = useFavorites()
 
   const [dishes, setDishes] = useState([])
   const [search, setSearch] = useState("")
-  const { favorites } = useFavorites()
 
   async function handleFavorites(favorite) {
     if (favorite.length === 0) {
@@ -30,15 +31,13 @@ export const Home = () => {
     setDishes(favorites)
   }
 
-  // useEffect(() => {
-  //   async function fetchDishes() {
-  //     const response = await api.get(`/dishes?title=${search}`)
-  //     setDishes(response.data)
-  //   }
-  //   fetchDishes()
-  // }, [search,
-  //   // favorites.length === 0 //TIRAR COMENTARIO
-  // ])
+  useEffect(() => {
+    async function fetchDishes() {
+      const response = await api.get(`/dishes?title=${search}`)
+      setDishes(response.data)
+    }
+    fetchDishes()
+  }, [search, favorites])
 
 
   return (
@@ -139,9 +138,9 @@ export const Home = () => {
                     <SwiperSlide
                       key={String(dish.id)}
                     >
-                      {/* <Card
-                      data={dish}
-                    /> */}
+                      <Card
+                        data={dish}
+                      />
                     </SwiperSlide>
                   ))
                 }
@@ -184,9 +183,9 @@ export const Home = () => {
                     <SwiperSlide
                       key={String(dish.id)}
                     >
-                      {/* <Card
-                      data={dish}
-                    /> */}
+                      <Card
+                        data={dish}
+                      />
                     </SwiperSlide>
                   ))
                 }

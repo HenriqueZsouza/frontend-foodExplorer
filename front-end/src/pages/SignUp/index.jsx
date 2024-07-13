@@ -1,17 +1,53 @@
-import React, { useState } from 'react'
-import { Link } from "react-router-dom"
+import { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom"
 import { ThemeProvider } from 'styled-components'
 
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
+import { api } from "../../services/api"
+
 import ThemeDefault from '../../styles/theme'
 import GlobalStyles from '../../styles/global'
 import { Container, Form, Logo } from "./styles"
 
 
 export const SignUp = () => {
+  const navigate = useNavigate()
 
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+
+
+  function handleBack() {
+    navigate(-1)
+  }
+
+  function handleSignUp() {
+    if (!name || !email || !password) {
+      return alert("Preencha todos os campos!")
+    }
+
+    setLoading(true)
+
+    api.post("/users", { name, email, password })
+      .then(() => {
+        alert("Usuário cadastrado com sucesso!")
+        navigate(-1)
+        setLoading(false)
+      })
+      .catch(error => {
+        if (error.response) {
+          alert(error.response.data.message)
+        } else {
+          alert("Não foi possível cadastrar")
+        }
+
+        setLoading(false)
+      })
+  }
+
 
   return (
     <ThemeProvider theme={ThemeDefault}>
@@ -35,7 +71,7 @@ export const SignUp = () => {
             <Input
               placeholder="Exemplo: Maria da Silva"
               type="text"
-            // onChange={e => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
             />
           </div>
 
@@ -44,7 +80,7 @@ export const SignUp = () => {
             <Input
               placeholder="Exemplo: exemplo@exemplo.com.br"
               type="text"
-            // onChange={e => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
 
@@ -53,18 +89,18 @@ export const SignUp = () => {
             <Input
               placeholder="No mínimo 6 caracteres"
               type="password"
-            // onChange={e => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
 
           <Button
             title={loading ? "Cadastrando" : "Criar conta"}
-            // onClick={handleSignUp}
+            onClick={handleSignUp}
             disabled={loading}
           />
 
-          <Link className="link" to="/">
-            {/* // onClick={handleBack}> */}
+          <Link className="link" to="/"
+            onClick={handleBack}>
             Já tenho uma conta
           </Link>
 

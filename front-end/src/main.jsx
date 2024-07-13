@@ -1,13 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from "react-router-dom"
+import Routes from './routes/index.jsx'
 
-import App from './App.jsx'
+import { AuthProvider } from './contexts/auth.jsx'
+import { CartProvider } from './contexts/cart.jsx'
+import { FavoritesProvider } from './contexts/favorites.jsx'
+
+import "./styles/global"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </BrowserRouter>
+  <React.StrictMode>
+    <AuthProvider>
+      <CartProvider>
+        <FavoritesProvider>
+          <Routes />
+        </FavoritesProvider>
+      </CartProvider>
+    </AuthProvider>
+  </React.StrictMode>
 )

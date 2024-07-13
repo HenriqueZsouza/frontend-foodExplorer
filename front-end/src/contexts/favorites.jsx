@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
-export const FavoritesContext = createContext({})
+export const FavoritesContext = createContext()
 
 function FavoritesProvider({ children }) {
     const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem(`@foodexplorer:favorites`)) || [])
@@ -30,7 +30,7 @@ function FavoritesProvider({ children }) {
 
 function useFavorites() {
     const context = useContext(FavoritesContext)
-    return context;
+    return context
 }
 
 export { FavoritesProvider, useFavorites }

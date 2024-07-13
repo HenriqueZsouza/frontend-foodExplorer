@@ -11,9 +11,9 @@ import { ButtonText } from '../../components/ButtonText'
 import { Ingredients } from '../../components/Ingredients'
 import { Button } from '../../components/Button'
 
-// import { api } from "../../services/api"
-// import { useAuth } from "../../hooks/auth"
-import { useCart } from '../../hooks/cart'
+import { api } from "../../services/api"
+import { useAuth } from "../../contexts/auth.jsx"
+import { useCart } from '../../contexts/cart.jsx'
 
 import ThemeDefault from '../../styles/theme.js'
 import { ThemeProvider } from 'styled-components'
@@ -22,7 +22,7 @@ import { Container, Content, Ingredient, PurchaseCard } from './styles.js'
 
 export function Details() {
 
-    // const { user } = useAuth()
+    const { user } = useAuth()
 
     const navigate = useNavigate()
 
@@ -42,7 +42,7 @@ export function Details() {
     const increase = () => {
         if (quantity > 19) {
             alert("Erro: A quantidade máxima é de 20 unidades")
-            return;
+            return
         }
         setQuantity(count => count + 1)
     }
@@ -55,103 +55,103 @@ export function Details() {
         setQuantity(count => count - 1)
     }
 
-    // useEffect(() => {
-    //     async function fetchDishDetail() {
-    //         const response = await api.get(`/dishes/${params.id}`)
-    //         setData(response.data)
-    //     }
+    useEffect(() => {
+        async function fetchDishDetail() {
+            const response = await api.get(`/dishes/${params.id}`)
+            setData(response.data)
+        }
 
-    //     fetchDishDetail()
-    // }, [])
+        fetchDishDetail()
+    }, [params])
 
     return (
         <ThemeProvider theme={ThemeDefault}>
             <GlobalStyles />
             <Container>
                 <Header />
-                {/* {
-                    data && */}
+                {
+                    data &&
 
-                <Content>
-                    <Link>
-                        <ButtonText
-                            title="Voltar"
-                            icon={RiArrowLeftSLine}
-                            onClick={handleBack}
-                        />
-                    </Link>
+                    <Content>
+                        <Link>
+                            <ButtonText
+                                title="Voltar"
+                                icon={RiArrowLeftSLine}
+                                onClick={handleBack}
+                            />
+                        </Link>
 
-                    <div className="content">
+                        <div className="content">
 
-                        <div className="dish">
-                            <img src={imageURL} alt="Logo" />
-                            <div className="description">
-                                {/* 
-                                <h1>{data.title}</h1>
+                            <div className="dish">
+                                <img src={imageURL} alt="Logo" />
+                                <div className="description">
 
-                                <h3>{data.description}</h3> */}
+                                    <h1>{data.title}</h1>
 
-                                <Ingredient>
-                                    {/* {
-                                        data.ingredients.map(ingredient => (
-                                            <Ingredients
-                                            // key={String(ingredient.id)}
-                                            // ingredient={ingredient.name}
-                                            />
-                                        ))
-                                    } */}
-                                </Ingredient>
+                                    <h3>{data.description}</h3>
 
-                                <div className="price">
-                                    {/* <h4>R$ {data.price}</h4> */}
+                                    <Ingredient>
+                                        {
+                                            data.ingredients.map(ingredient => (
+                                                <Ingredients
+                                                    key={String(ingredient.id)}
+                                                    ingredient={ingredient.name}
+                                                />
+                                            ))
+                                        }
+                                    </Ingredient>
 
-                                    <div className="purchaseCard">
-                                        {/* {
-                                            user.isAdmin ? */}
+                                    <div className="price">
+                                        <h4>R$ {data.price}</h4>
 
-                                        <PurchaseCard>
+                                        <div className="purchaseCard">
                                             {
-                                                data &&
-                                                <Link to={`/editdish/${data.id}`}>
-                                                    <Button
-                                                        title="editar prato"
-                                                        icon={BsReceipt}
-                                                    />
-                                                </Link>
+                                                user.isAdmin ?
+
+                                                    <PurchaseCard>
+                                                        {
+                                                            data &&
+                                                            <Link to={`/editdish/${data.id}`}>
+                                                                <Button
+                                                                    title="editar prato"
+                                                                    icon={BsReceipt}
+                                                                />
+                                                            </Link>
+                                                        }
+                                                    </PurchaseCard>
+
+                                                    :
+
+                                                    <PurchaseCard>
+                                                        <div className="counter">
+                                                            <ButtonText
+                                                                icon={FiMinus}
+                                                                onClick={decrease}
+                                                            />
+                                                            <span>{quantity.toString().padStart(2, '0')}</span>
+                                                            <ButtonText
+                                                                icon={FiPlus}
+                                                                onClick={increase}
+                                                            />
+                                                        </div>
+
+                                                        <Button
+                                                            title="incluir"
+                                                            icon={BsReceipt}
+                                                            onClick={() => handleAddDishToCart(data, quantity, imageURL)}
+                                                            style={{ height: 56, width: 92, padding: '12px 4px' }}
+                                                        />
+                                                    </PurchaseCard>
                                             }
-                                        </PurchaseCard>
-
-                                        {/* : */}
-
-                                        <PurchaseCard>
-                                            <div className="counter">
-                                                <ButtonText
-                                                    icon={FiMinus}
-                                                    onClick={decrease}
-                                                />
-                                                {/* <span>{quantity.toString().padStart(2, '0')}</span> */}
-                                                <ButtonText
-                                                    icon={FiPlus}
-                                                    onClick={increase}
-                                                />
-                                            </div>
-
-                                            <Button
-                                                title="incluir"
-                                                icon={BsReceipt}
-                                                onClick={() => handleAddDishToCart(data, quantity, imageURL)}
-                                                style={{ height: 56, width: 92, padding: '12px 4px' }}
-                                            />
-                                        </PurchaseCard>
-                                        {/* } */}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </Content>
-                {/* } */}
+                    </Content>
+                }
                 <Footer />
             </Container>
         </ThemeProvider>

@@ -10,8 +10,8 @@ import { Button } from '../../components/Button'
 import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
 import logo from '../../assets/logo.svg'
 
-// import { api } from '../../services/api'
-import { useAuth } from '../../hooks/auth'
+import { api } from '../../services/api'
+import { useAuth } from '../../contexts/auth'
 import ThemeDefault from '../../styles/theme'
 import { ThemeProvider } from 'styled-components'
 import GlobalStyles from '../../styles/global'
@@ -20,36 +20,35 @@ import { Container, Content, Form, Avatar, Infos, Logo } from './styles'
 export function Profile() {
 
     const { user, updateProfile, loading } = useAuth()
+    const [name, setName] = useState(user.name)
+    const [email, setEmail] = useState(user.email)
+    const [passwordOld, setPasswordOld] = useState()
+    const [passwordNew, setPasswordNew] = useState()
 
-    // const [name, setName] = useState(user.name)F
-    // const [email, setEmail] = useState(user.email)
-    // const [passwordOld, setPasswordOld] = useState()
-    // const [passwordNew, setPasswordNew] = useState()
+    const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+    const [avatar, setAvatar] = useState(avatarUrl)
+    const [avatarFile, setAvatarFile] = useState(null)
 
-    // // const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
-    // const [avatar, setAvatar] = useState(avatarUrl)
-    // const [avatarFile, setAvatarFile] = useState(null)
+    async function handleUpdate() {
+        const updated = {
+            name,
+            email,
+            password: passwordNew,
+            old_password: passwordOld,
+        }
 
-    // async function handleUpdate() {
-    //     const updated = {
-    //         name,
-    //         email,
-    //         password: passwordNew,
-    //         old_password: passwordOld,
-    //     }
+        const userUpdated = Object.assign(user, updated)
 
-    //     const userUpdated = Object.assign(user, updated)
+        await updateProfile({ user: userUpdated, avatarFile })
+    }
 
-    //     await updateProfile({ user: userUpdated, avatarFile })
-    // }
+    function handleChangeAvatar(event) {
+        const file = event.target.files[0]
+        setAvatarFile(file)
 
-    // function handleChangeAvatar(event) {
-    //     const file = event.target.files[0]
-    //     setAvatarFile(file)
-
-    //     const imagePreview = URL.createObjectURL(file)
-    //     setAvatar(imagePreview)
-    // }
+        const imagePreview = URL.createObjectURL(file)
+        setAvatar(imagePreview)
+    }
 
     return (
         <ThemeProvider theme={ThemeDefault}>
@@ -62,7 +61,7 @@ export function Profile() {
                         <Form>
                             <Avatar>
                                 <img
-                                    // src={avatar}
+                                    src={avatar}
                                     alt="Foto do usuário"
                                 />
 
@@ -73,7 +72,7 @@ export function Profile() {
                                         id="avatar"
                                         type="file"
                                         accept="image/*"
-                                    // onChange={handleChangeAvatar}
+                                        onChange={handleChangeAvatar}
                                     />
                                 </label>
                             </Avatar>
@@ -84,8 +83,8 @@ export function Profile() {
                                     <input
                                         type="text"
                                         placeholder="Nome"
-                                    // value={name}
-                                    // onChange={e => setName(e.target.value)}
+                                        value={name}
+                                        onChange={e => setName(e.target.value)}
                                     />
                                 </label>
 
@@ -94,8 +93,8 @@ export function Profile() {
                                     <input
                                         type="text"
                                         placeholder="E-mail"
-                                    // value={email}
-                                    // onChange={e => setEmail(e.target.value)}
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
                                     />
                                 </label>
 
@@ -104,7 +103,7 @@ export function Profile() {
                                     <input
                                         type="password"
                                         placeholder="Senha atual"
-                                    // onChange={e => setPasswordOld(e.target.value)}
+                                        onChange={e => setPasswordOld(e.target.value)}
                                     />
                                 </label>
 
@@ -113,76 +112,76 @@ export function Profile() {
                                     <input
                                         type="password"
                                         placeholder="Nova senha"
-                                    // onChange={e => setPasswordNew(e.target.value)}
+                                        onChange={e => setPasswordNew(e.target.value)}
                                     />
                                 </label>
                             </div>
 
                             <Button
-                            // title={loading ? "Salvando" : "Salvar"}
-                            // onClick={handleUpdate}
-                            // disabled={loading}
+                                title={loading ? "Salvando" : "Salvar"}
+                                onClick={handleUpdate}
+                                disabled={loading}
                             />
                         </Form>
 
-                        {/* {
-                            user.isAdmin ? */}
+                        {
+                            user.isAdmin ?
 
-                        <Infos>
-                            <Logo>
-                                <div className="logo">
-                                    <img src={logo} alt="" />
-                                </div>
-                            </Logo>
+                                <Infos>
+                                    <Logo>
+                                        <div className="logo">
+                                            <img src={logo} alt="" />
+                                        </div>
+                                    </Logo>
 
-                            <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
+                                    <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
 
-                            <Link to="/orders">
-                                <Button
-                                    title="Ver pedidos"
-                                    icon={FiShoppingBag}
-                                />
-                            </Link>
+                                    <Link to="/orders">
+                                        <Button
+                                            title="Ver pedidos"
+                                            icon={FiShoppingBag}
+                                        />
+                                    </Link>
 
-                            <Link to="/createdish">
-                                <Button
-                                    title="Criar novo Prato"
-                                    icon={FiPlus}
-                                />
-                            </Link>
-                        </Infos>
+                                    <Link to="/createdish">
+                                        <Button
+                                            title="Criar novo Prato"
+                                            icon={FiPlus}
+                                        />
+                                    </Link>
+                                </Infos>
 
-                        :
+                                :
 
-                        <Infos>
-                            <Logo>
-                                <div className="logo">
-                                    <img src={logo} alt="" />
-                                </div>
-                            </Logo>
+                                <Infos>
+                                    <Logo>
+                                        <div className="logo">
+                                            <img src={logo} alt="" />
+                                        </div>
+                                    </Logo>
 
-                            <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
+                                    <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
 
-                            <Link to="/orders">
-                                <Button
-                                    title="Meus pedidos"
-                                    icon={FiShoppingBag}
-                                />
-                            </Link>
+                                    <Link to="/orders">
+                                        <Button
+                                            title="Meus pedidos"
+                                            icon={FiShoppingBag}
+                                        />
+                                    </Link>
 
-                            <Button
-                                title="Contato por e-mail"
-                                icon={FiMail}
-                                onClick={() => window.location = 'mailto:suporte@foodexplorer.com'}
-                            />
+                                    <Button
+                                        title="Contato por e-mail"
+                                        icon={FiMail}
+                                        onClick={() => window.location = 'mailto:suporte@foodexplorer.com'}
+                                    />
 
-                            <Button
-                                title="WhatsApp"
-                                icon={BsWhatsapp}
-                                onClick={() => window.open("https://api.whatsapp.com/send?phone=+999999999999&text=Oi pessoal do FoodExplorer! Gostaria de falar sobre o meu pedido!", '_blank')}
-                            />
-                        </Infos>
-                        {/* } */}
+                                    <Button
+                                        title="WhatsApp"
+                                        icon={BsWhatsapp}
+                                        onClick={() => window.open("https://api.whatsapp.com/send?phone=+999999999999&text=Oi pessoal do FoodExplorer! Gostaria de falar sobre o meu pedido!", '_blank')}
+                                    />
+                                </Infos>
+                        }
                     </div>
                 </Content>
                 <Footer />

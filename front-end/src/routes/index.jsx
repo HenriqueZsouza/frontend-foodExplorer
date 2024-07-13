@@ -1,8 +1,15 @@
+import { BrowserRouter } from "react-router-dom"
+import { useAuth } from "../contexts/auth"
+
 import { AppRoutes } from "./appRoutes"
+import { AuthRoutes } from "./auth.routes"
 
-function Routes() {
+export function Routes() {
+  const { user } = useAuth()
 
-  return (<AppRoutes />)
+  return (
+    <BrowserRouter>
+      {user ? <AppRoutes /> : <AuthRoutes />}
+    </BrowserRouter>
+  )
 }
-
-export default Routes

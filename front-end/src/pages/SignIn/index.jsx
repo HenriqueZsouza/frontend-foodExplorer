@@ -1,15 +1,22 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from "react-router-dom"
 import { ThemeProvider } from 'styled-components'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
+import { useAuth } from "../../contexts/auth"
+
 import ThemeDefault from '../../styles/theme'
 import GlobalStyles from '../../styles/global'
 import { Container, Form, Logo } from "./styles"
 
 export const SignIn = () => {
+  const { signIn, loading } = useAuth()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
-  const [loading, setLoading] = useState(false)
+  function handleSignIn() {
+    signIn({ email, password })
+  }
 
   return (
     <ThemeProvider theme={ThemeDefault}>
@@ -33,7 +40,7 @@ export const SignIn = () => {
             <Input
               placeholder="Exemplo: exemplo@exemplo.com.br"
               type="text"
-            // onChange={e => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
 
@@ -42,13 +49,13 @@ export const SignIn = () => {
             <Input
               placeholder="No mínimo 6 caracteres"
               type="password"
-            // onChange={e => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
 
           <Button
             title={loading ? "Entrando" : "Entrar"}
-            // onClick={handleSignIn}
+            onClick={handleSignIn}
             disabled={loading}
           />
 

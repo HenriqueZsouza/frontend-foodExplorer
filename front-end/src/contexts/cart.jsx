@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
-export const CartContext = createContext({})
+export const CartContext = createContext()
 
 function CartProvider({ children }) {
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem(`@foodexplorer:cart`)) || [])
@@ -41,8 +41,8 @@ function CartProvider({ children }) {
     }, 0)
 
     async function handleResetCart() {
-        localStorage.removeItem(`@foodexplorer:cart`);
-        setCart([]);
+        localStorage.removeItem(`@foodexplorer:cart`)
+        setCart([])
     }
 
     useEffect(() => {
@@ -66,7 +66,7 @@ function CartProvider({ children }) {
 
 function useCart() {
     const context = useContext(CartContext)
-    return context;
+    return context
 }
 
 export { CartProvider, useCart }
