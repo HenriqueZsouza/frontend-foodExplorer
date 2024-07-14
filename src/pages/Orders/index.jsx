@@ -11,125 +11,125 @@ import ThemeDefault from '../../styles/theme'
 import { Container, Content, Table } from './styles.js'
 
 export function Orders() {
-    const { user } = useAuth()
-    const { orders, setOrders } = useCart()
+  const { user } = useAuth()
+  const { orders, setOrders } = useCart()
 
-    useEffect(() => {
-        async function fetchOrders() {
-            const response = await api.get("/orders")
-            setOrders(response.data)
-        }
-
-        fetchOrders()
-    }, [setOrders])
-
-    async function handleOrderStatus(order, event) {
-        let statusSelected = event.target.value
-
-        const cart = {
-            id: order.id,
-            orderStatus: statusSelected,
-        };
-
-        await api.put("/orders", cart)
-        location.reload()
+  useEffect(() => {
+    async function fetchOrders() {
+      const response = await api.get("/orders")
+      setOrders(response.data)
     }
 
-    function formatDate(date) {
-        const dateFormatted = new Date(date)
+    fetchOrders()
+  }, [setOrders])
 
-        let monthFormatted = (dateFormatted.getMonth() + 1).toString()
-        monthFormatted = monthFormatted.length == 1 ? `0${monthFormatted}` : monthFormatted
+  async function handleOrderStatus(order, event) {
+    let statusSelected = event.target.value
 
-        let minutesFormatted = dateFormatted.getMinutes().toString()
-        minutesFormatted = minutesFormatted.length == 1 ? `0${minutesFormatted}` : minutesFormatted
+    const cart = {
+      id: order.id,
+      orderStatus: statusSelected,
+    };
 
-        return `${dateFormatted.getDate()}/${monthFormatted} às ${dateFormatted.getHours() - 3}h${minutesFormatted}`
-    }
+    await api.put("/orders", cart)
+    location.reload()
+  }
 
-    return (
-        <ThemeProvider theme={ThemeDefault}>
-            <GlobalStyles />
-            <Container>
-                <Header />
-                <Content>
+  function formatDate(date) {
+    const dateFormatted = new Date(date)
 
-                    <h1>Pedidos</h1>
+    let monthFormatted = (dateFormatted.getMonth() + 1).toString()
+    monthFormatted = monthFormatted.length == 1 ? `0${monthFormatted}` : monthFormatted
 
-                    <Table>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Status</th>
-                                    <th>Código</th>
-                                    <th>Detalhamento</th>
-                                    <th>Data e hora</th>
-                                </tr>
-                            </thead>
+    let minutesFormatted = dateFormatted.getMinutes().toString()
+    minutesFormatted = minutesFormatted.length == 1 ? `0${minutesFormatted}` : minutesFormatted
 
-                            {orders.length < 1 &&
+    return `${dateFormatted.getDate()}/${monthFormatted} às ${dateFormatted.getHours() - 3}h${minutesFormatted}`
+  }
 
-                                <tbody>
-                                    <tr>
-                                        <td colSpan="4">
-                                            <div className="zeroOrders">
-                                                <p>Não existem pedidos cadastrados!</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            }
+  return (
+    <ThemeProvider theme={ThemeDefault}>
+      <GlobalStyles />
+      <Container>
+        <Header />
+        <Content>
 
-                            {
-                                user.isAdmin ?
+          <h1>Pedidos</h1>
 
-                                    <tbody className="order">
+          <Table>
+            <table>
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Código</th>
+                  <th>Detalhamento</th>
+                  <th>Data e hora</th>
+                </tr>
+              </thead>
 
-                                        {orders &&
-                                            orders.map(order => (
-                                                <tr key={String(order.id)}>
-                                                    <td>
-                                                        <select defaultValue={order.orderStatus} onChange={event => handleOrderStatus(order, event)}>
-                                                            <option value="🟡 Pendente">🟡 Pendente</option>
-                                                            <option value="🟠 Preparando">🟠 Preparando</option>
-                                                            <option value="🟢 Entregue">🟢 Entregue</option>
-                                                            <option value="🔴 Cancelado">🔴 Cancelado</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>0000{order.id}</td>
-                                                    <td>
-                                                        {order.items.map((item) => (
-                                                            <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
-                                                        ))}
-                                                    </td>
-                                                    <td>{formatDate(order.created_at)}</td>
-                                                </tr>
-                                            ))
-                                        }
-                                    </tbody>
-                                    :
-                                    <tbody className="order">
-                                        {orders &&
-                                            orders.map(order => (
-                                                <tr key={String(order.id)}>
-                                                    <td>{order.orderStatus}</td>
-                                                    <td>0000{order.id}</td>
-                                                    <td>
-                                                        {order.items.map((item) => (
-                                                            <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
-                                                        ))}
-                                                    </td>
-                                                    <td>{formatDate(order.created_at)}</td>
-                                                </tr>
-                                            ))
-                                        }
-                                    </tbody>
-                            }
-                        </table>
-                    </Table>
-                </Content>
-                <Footer />
-            </Container>
-        </ThemeProvider>
-    )
+              {orders.length < 1 &&
+
+                <tbody>
+                  <tr>
+                    <td colSpan="4">
+                      <div className="zeroOrders">
+                        <p>Não existem pedidos cadastrados!</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              }
+
+              {
+                user.isAdmin ?
+
+                  <tbody className="order">
+
+                    {orders &&
+                      orders.map(order => (
+                        <tr key={String(order.id)}>
+                          <td>
+                            <select defaultValue={order.orderStatus} onChange={event => handleOrderStatus(order, event)}>
+                              <option value="🟡 Pendente">🟡 Pendente</option>
+                              <option value="🟠 Preparando">🟠 Preparando</option>
+                              <option value="🟢 Entregue">🟢 Entregue</option>
+                              <option value="🔴 Cancelado">🔴 Cancelado</option>
+                            </select>
+                          </td>
+                          <td>0000{order.id}</td>
+                          <td>
+                            {order.items.map((item) => (
+                              <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
+                            ))}
+                          </td>
+                          <td>{formatDate(order.created_at)}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+                  :
+                  <tbody className="order">
+                    {orders &&
+                      orders.map(order => (
+                        <tr key={String(order.id)}>
+                          <td>{order.orderStatus}</td>
+                          <td>0000{order.id}</td>
+                          <td>
+                            {order.items.map((item) => (
+                              <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
+                            ))}
+                          </td>
+                          <td>{formatDate(order.created_at)}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+              }
+            </table>
+          </Table>
+        </Content>
+        <Footer />
+      </Container>
+    </ThemeProvider>
+  )
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { message } from 'antd'
 import { Link, useNavigate } from "react-router-dom"
 import { ThemeProvider } from 'styled-components'
 
@@ -26,22 +27,22 @@ export const SignUp = () => {
 
   function handleSignUp() {
     if (!name || !email || !password) {
-      return alert("Preencha todos os campos!")
+      return message.warning("Preencha todos os campos!")
     }
 
     setLoading(true)
 
     api.post("/users", { name, email, password })
       .then(() => {
-        alert("Usuário cadastrado com sucesso!")
+        message.warning("Usuário cadastrado com sucesso!")
         navigate(-1)
         setLoading(false)
       })
       .catch(error => {
         if (error.response) {
-          alert(error.response.data.message)
+          message.error(error.response.data.message)
         } else {
-          alert("Não foi possível cadastrar")
+          message.error("Não foi possível cadastrar")
         }
 
         setLoading(false)

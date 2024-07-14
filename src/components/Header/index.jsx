@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { BsReceipt } from 'react-icons/bs'
 import { FiSearch, FiLogOut, FiUser, FiShoppingBag, FiHeart } from 'react-icons/fi'
 import { useCart } from '../../contexts/cart'
-import { useAuth } from '../../contexs/auth'
+import { useAuth } from '../../contexts/auth'
 import logo from '../../assets/logo.svg'
 import { Container, Content, Logo, Search, Logout, Button, ButtonMenu, Profile } from "./styles"
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { BsReceipt } from 'react-icons/bs'
 
@@ -26,274 +27,268 @@ import { Container, Content, PaymentCard } from './styles.js'
 
 
 export const Cart = () => {
-    const { user } = useAuth()
-    const { cart, total, handleResetCart } = useCart()
-    const navigate = useNavigate()
+  const { user } = useAuth()
+  const { cart, total, handleResetCart } = useCart()
+  const navigate = useNavigate()
 
-    const [loading, setLoading] = useState(false)
-    const [num, setNum] = useState('')
-    const [cvc, setCvc] = useState('')
-    const [isPixVisible, setIsPixVisible] = useState(false)
-    const [isCreditVisible, setIsCreditVisible] = useState(false)
-    const [isCartVisible, setIsCartVisible] = useState(true)
-    const [pixActive, setPixActive] = useState(false)
-    const [creditActive, setCreditActive] = useState(false)
-    const [isClockActive, setIsClockActive] = useState(false)
-    const [disabledButton, setDisabledButton] = useState(false)
-    const [isApprovedActive, setIsApprovedActive] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [num, setNum] = useState('')
+  const [cvc, setCvc] = useState('')
+  const [isPixVisible, setIsPixVisible] = useState(false)
+  const [isCreditVisible, setIsCreditVisible] = useState(false)
+  const [isCartVisible, setIsCartVisible] = useState(true)
+  const [pixActive, setPixActive] = useState(false)
+  const [creditActive, setCreditActive] = useState(false)
+  const [isClockActive, setIsClockActive] = useState(false)
+  const [disabledButton, setDisabledButton] = useState(false)
+  const [isApprovedActive, setIsApprovedActive] = useState(false)
 
-    function handleCreatedCart(cart) {
-        return {
-            orderStatus: '🔴 Pendente',
-            paymentMethod: pixActive ? 'pix' : 'creditCard',
-            totalPrice: total,
-            cart: cart.map(item => (
-                {
-                    id: item.id,
-                    title: item.title,
-                    quantity: item.quantity
-                }
-            ))
+  function handleCreatedCart(cart) {
+    return {
+      orderStatus: '🔴 Pendente',
+      paymentMethod: pixActive ? 'pix' : 'creditCard',
+      totalPrice: total,
+      cart: cart.map(item => (
+        {
+          id: item.id,
+          title: item.title,
+          quantity: item.quantity
         }
+      ))
+    }
+  }
+
+  async function handleFinishPayment(cart) {
+
+    const newCart = handleCreatedCart(cart)
+
+    if (cart.length < 1) {
+      navigate(-1)
+      return message.warning("Ops! Seu carrinho está vazio. Adicione algo antes de tentar pagar.")
     }
 
-    async function handleFinishPayment(cart) {
-
-        const newCart = handleCreatedCart(cart)
-
-        if (cart.length < 1) {
-            navigate(-1)
-            return alert("Oops! Seu carrinho está vazio. Adicione algo antes de tentar pagar.")
-        }
-
-        if (!pixActive && num.length < 16) {
-            alert("Erro: Número de cartão incompleto!")
-            return
-        }
-
-        if (!pixActive && date.length < 4) {
-            return alert("Erro: Validade do cartão incompleta!")
-        }
-
-        if (!pixActive && cvc.length < 3) {
-            return alert("Erro: CVC do cartão incompleto!")
-        }
-
-        setLoading(true)
-
-        await api.post("/orders", newCart)
-            .then(() => {
-                disableButton()
-                setTimeout(() => {
-                    alert("Pedido cadastrado com sucesso!")
-                    navigate(-1)
-                    handleResetCart()
-                }, 7000)
-            })
-            .catch(error => {
-                if (error.response) {
-                    alert(error.response.data.message)
-                } else {
-                    alert("Não foi possível cadastrar")
-                }
-            })
-
-        setLoading(false)
+    if (!pixActive && num.length < 16) {
+      message.warning("Número de cartão incompleto!")
+      return
     }
 
-    const handleNumChange = event => {
-        const limit = 16
-        setNum(event.target.value.slice(0, limit))
+    if (!pixActive && date.length < 4) {
+      return message.warning("Validade do cartão incompleta!")
     }
 
-    const handleCvcChange = event => {
-        const limit = 3
-        setCvc(event.target.value.slice(0, limit))
+    if (!pixActive && cvc.length < 3) {
+      return message.warning("CVC do cartão incompleto!")
     }
 
-    const handlePaymentPix = () => {
-        setIsPixVisible(true)
-        setIsCreditVisible(false)
-        setIsCartVisible(false)
-        setPixActive(true)
-        setCreditActive(false)
-    }
+    setLoading(true)
 
-    const handlePaymentCredit = () => {
-        setIsCreditVisible(true)
-        setIsPixVisible(false)
-        setIsCartVisible(false)
-        setCreditActive(true)
-        setPixActive(false)
-    }
-
-    const disableButton = () => {
-        setDisabledButton(true)
-
-        setIsCreditVisible(false)
-        setIsPixVisible(false)
-
-        setIsClockActive(true)
-        setIsApprovedActive(false)
+    await api.post("/orders", newCart)
+      .then(() => {
+        disableButton()
         setTimeout(() => {
-            setIsClockActive(false)
-            setIsApprovedActive(true)
-        }, 4000)
-    }
+          message.success("Pedido cadastrado com sucesso!")
+          navigate(-1)
+          handleResetCart()
+        }, 7000)
+      })
+      .catch(error => {
+        if (error.response) {
+          message.warning(error.response.data.message)
+        } else {
+          message.warning("Não foi possível cadastrar")
+        }
+      })
 
-    return (
-        <ThemeProvider theme={ThemeDefault}>
-            <GlobalStyles />
-            <Container>
-                <Header />
+    setLoading(false)
+  }
 
-                {
-                    user.isAdmin ?
+  const handleNumChange = event => {
+    const limit = 16
+    setNum(event.target.value.slice(0, limit))
+  }
 
-                        <PageError />
+  const handleCvcChange = event => {
+    const limit = 3
+    setCvc(event.target.value.slice(0, limit))
+  }
 
-                        :
+  const handlePaymentPix = () => {
+    setIsPixVisible(true)
+    setIsCreditVisible(false)
+    setIsCartVisible(false)
+    setPixActive(true)
+    setCreditActive(false)
+  }
 
-                        <Content>
+  const handlePaymentCredit = () => {
+    setIsCreditVisible(true)
+    setIsPixVisible(false)
+    setIsCartVisible(false)
+    setCreditActive(true)
+    setPixActive(false)
+  }
 
-                            <div className="card-wrapper">
+  const disableButton = () => {
+    setDisabledButton(true)
 
-                                <div className="order-wrapper">
-                                    <h2>Meu pedido</h2>
-                                    <div className="details">
-                                        {
-                                            cart &&
-                                            cart.map(item => (
-                                                <OrderCard
-                                                    key={String(item.id)}
-                                                    data={item}
-                                                />
-                                            ))
-                                        }
-                                    </div>
+    setIsCreditVisible(false)
+    setIsPixVisible(false)
 
-                                    <div className="total">
-                                        <p>Total: R$<span>{total}</span></p>
-                                    </div>
-                                </div>
+    setIsClockActive(true)
+    setIsApprovedActive(false)
+    setTimeout(() => {
+      setIsClockActive(false)
+      setIsApprovedActive(true)
+    }, 4000)
+  }
 
-                                <PaymentCard>
-                                    <div className="paymentHeader">
-                                        <h2>Pagamento</h2>
+  return (
+    <ThemeProvider theme={ThemeDefault}>
+      <GlobalStyles />
+      <Container>
+        <Header />
 
-                                        <div className="buttons">
-                                            <button className={pixActive === true ? 'active' : ''} disabled={disabledButton} onClick={handlePaymentPix}>
-                                                <img src={logoPix} alt="Logo Pix" />
-                                                PIX
-                                            </button>
+        {user.isAdmin ?
+          <PageError />
+          :
+          <Content>
+            <div className="card-wrapper">
 
-                                            <button className={creditActive === true ? 'active' : ''} disabled={disabledButton} onClick={handlePaymentCredit}>
-                                                <img src={cardImg} alt="Logo Cartão de Crédito" />
-                                                Crédito
-                                            </button>
-                                        </div>
-                                    </div>
+              <div className="order-wrapper">
+                <h2>Meu pedido</h2>
+                <div className="details">
+                  {
+                    cart &&
+                    cart.map(item => (
+                      <OrderCard
+                        key={String(item.id)}
+                        data={item}
+                      />
+                    ))
+                  }
+                </div>
 
-                                    <div className="paymentBody">
+                <div className="total">
+                  <p>Total: R$<span>{total}</span></p>
+                </div>
+              </div>
 
-                                        {isCartVisible &&
-                                            <div className="cart" id="cart">
-                                                <img src={cartImg} alt="Imagem do carrinho de compras" />
-                                                <p>Selecione uma forma de pagamento acima!</p>
-                                            </div>
-                                        }
+              <PaymentCard>
+                <div className="paymentHeader">
+                  <h2>Pagamento</h2>
 
-                                        {isPixVisible &&
-                                            <div className={pixActive === false ? 'active' : ''} id="paymentPix">
-                                                <div className="qr">
-                                                    <img src={qrCode} alt="Imagem do QRCode" />
-                                                </div>
+                  <div className="buttons">
+                    <button className={pixActive === true ? 'active' : ''} disabled={disabledButton} onClick={handlePaymentPix}>
+                      <img src={logoPix} alt="Logo Pix" />
+                      PIX
+                    </button>
 
-                                                <Button
-                                                    title={loading ? "Finalizando pagamento" : "Finalizar pagamento"}
-                                                    disabled={loading}
-                                                    icon={BsReceipt}
-                                                    style={{ height: 56 }}
-                                                    className="finishPaymentButton"
-                                                    onClick={() => { handleFinishPayment(cart) }}
-                                                />
-                                            </div>
-                                        }
+                    <button className={creditActive === true ? 'active' : ''} disabled={disabledButton} onClick={handlePaymentCredit}>
+                      <img src={cardImg} alt="Logo Cartão de Crédito" />
+                      Crédito
+                    </button>
+                  </div>
+                </div>
 
-                                        {isCreditVisible &&
+                <div className="paymentBody">
 
-                                            <div className="paymentCredit" id="paymentCredit">
-                                                <div className="inputs">
-                                                    <p>Número do Cartão</p>
-                                                    <Input
-                                                        placeholder="0000 0000 0000 0000"
-                                                        type="number"
-                                                        id="num"
-                                                        name="num"
-                                                        value={num}
-                                                        onChange={handleNumChange}
-                                                    />
-                                                </div>
+                  {isCartVisible &&
+                    <div className="cart" id="cart">
+                      <img src={cartImg} alt="Imagem do carrinho de compras" />
+                      <p>Selecione uma forma de pagamento acima!</p>
+                    </div>
+                  }
 
-                                                <div className="validTo">
-                                                    <div>
-                                                        <p>Validade</p>
-                                                        <Input
-                                                            placeholder="MM/AA"
-                                                            type="text"
-                                                            id="date"
-                                                            name="date"
-                                                            maxLength="5"
-                                                        />
-                                                    </div>
+                  {isPixVisible &&
+                    <div className={pixActive === false ? 'active' : ''} id="paymentPix">
+                      <div className="qr">
+                        <img src={qrCode} alt="Imagem do QRCode" />
+                      </div>
 
-                                                    <div>
-                                                        <p>CVC</p>
-                                                        <Input
-                                                            placeholder="***"
-                                                            type="number"
-                                                            id="cvc"
-                                                            name="cvc"
-                                                            value={cvc}
-                                                            onChange={handleCvcChange}
-                                                        />
-                                                    </div>
-                                                </div>
+                      <Button
+                        title={loading ? "Finalizando pagamento" : "Finalizar pagamento"}
+                        disabled={loading}
+                        icon={BsReceipt}
+                        style={{ height: 56 }}
+                        className="finishPaymentButton"
+                        onClick={() => { handleFinishPayment(cart) }}
+                      />
+                    </div>
+                  }
 
-                                                <Button
-                                                    title={loading ? "Finalizando pagamento" : "Finalizar pagamento"}
-                                                    disabled={loading}
-                                                    icon={BsReceipt}
-                                                    style={{ height: 56 }}
-                                                    className="finishPaymentButton"
-                                                    onClick={() => { handleFinishPayment(cart) }}
-                                                />
-                                            </div>
-                                        }
+                  {isCreditVisible &&
 
-                                        {isClockActive &&
+                    <div className="paymentCredit" id="paymentCredit">
+                      <div className="inputs">
+                        <p>Número do Cartão</p>
+                        <Input
+                          placeholder="0000 0000 0000 0000"
+                          type="number"
+                          id="num"
+                          name="num"
+                          value={num}
+                          onChange={handleNumChange}
+                        />
+                      </div>
 
-                                            <div className="clock" id="clock">
-                                                <img src={clock} alt="Imagem do QRCode" />
-                                                <p>Aguarde: Estamos processando o seu pagamento</p>
-                                            </div>
-                                        }
+                      <div className="validTo">
+                        <div>
+                          <p>Validade</p>
+                          <Input
+                            placeholder="MM/AA"
+                            type="text"
+                            id="date"
+                            name="date"
+                            maxLength="5"
+                          />
+                        </div>
 
-                                        {isApprovedActive &&
+                        <div>
+                          <p>CVC</p>
+                          <Input
+                            placeholder="***"
+                            type="number"
+                            id="cvc"
+                            name="cvc"
+                            value={cvc}
+                            onChange={handleCvcChange}
+                          />
+                        </div>
+                      </div>
 
-                                            <div className="approved" id="approved">
-                                                <img src={checkCircle} alt="Imagem de pagamento aprovado" />
-                                                <p>Oba! Pagamento aprovado! Em breve faremos a entrega!</p>
-                                            </div>
-                                        }
-                                    </div>
-                                </PaymentCard>
-                            </div>
-                        </Content>
-                }
+                      <Button
+                        title={loading ? "Finalizando pagamento" : "Finalizar pagamento"}
+                        disabled={loading}
+                        icon={BsReceipt}
+                        style={{ height: 56 }}
+                        className="finishPaymentButton"
+                        onClick={() => { handleFinishPayment(cart) }}
+                      />
+                    </div>
+                  }
 
-                <Footer />
-            </Container>
-        </ThemeProvider>
-    )
+                  {isClockActive &&
+
+                    <div className="clock" id="clock">
+                      <img src={clock} alt="Imagem do QRCode" />
+                      <p>Aguarde: Estamos processando o seu pagamento</p>
+                    </div>
+                  }
+
+                  {isApprovedActive &&
+
+                    <div className="approved" id="approved">
+                      <img src={checkCircle} alt="Imagem de pagamento aprovado" />
+                      <p>Oba! Pagamento aprovado! Em breve faremos a entrega!</p>
+                    </div>
+                  }
+                </div>
+              </PaymentCard>
+            </div>
+          </Content>
+        }
+        <Footer />
+      </Container>
+    </ThemeProvider>
+  )
 }

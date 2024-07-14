@@ -14,6 +14,7 @@ import { api } from '../../services/api'
 
 import imagePlaceholder from '../../assets/image-not-found-icon.svg'
 import { Container, Content, PurchaseCard } from './styles.js'
+import { message } from 'antd'
 
 export const Card = ({ data, ...rest }) => {
   const { user } = useAuth()
@@ -29,16 +30,16 @@ export const Card = ({ data, ...rest }) => {
 
   const increase = () => {
     if (quantity > 19) {
-      alert("Erro: A quantidade máxima é de 20 unidades")
-      return;
+      message.warning("A quantidade máxima é de 20 unidades")
+      return
     }
     setQuantity(count => count + 1)
   }
 
   const decrease = () => {
     if (quantity < 2) {
-      alert("Erro: A quantidade mínima é 1 unidade")
-      return;
+      message.warning("A quantidade mínima é 1 unidade")
+      return
     }
     setQuantity(count => count - 1)
   }

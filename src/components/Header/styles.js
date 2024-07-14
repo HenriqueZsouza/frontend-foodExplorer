@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom"
+import styled from "styled-components"
 
 export const Container = styled.header`
     display: flex;
@@ -12,6 +12,9 @@ export const Container = styled.header`
     
     justify-content: center;
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_600};
+
+    -webkit-box-shadow: 0px 0px 10px 5px #193746; 
+    box-shadow: 0px 0px 10px 5px #193746;
 
     @keyframes scale-up-center {
         0% {
@@ -142,13 +145,18 @@ export const Logo = styled.div`
     
     h1 {
         font-size: 2.51109rem;
-        margin-top: 0.8rem;
-        color: ${({ theme }) => theme.COLORS.WHITE};
+        animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    }
+    
+    .logo img:hover {
+        -webkit-animation: rotate-center 0.6s ease-in-out both;
+        animation: rotate-center 0.6s ease-in-out both;
     }
     
     a {
         display: flex;
         gap: 1.123rem;
+
         text-decoration: none;
         color: inherit;
     }
@@ -186,7 +194,6 @@ export const Search = styled.div`
 
     svg {
         color: ${({ theme }) => theme.COLORS.GRAY_200};
-        cursor: pointer;
     }
 `
 
@@ -215,9 +222,11 @@ export const Button = styled.button`
         max-width: 21.6rem;
     }
 `
+
 export const Logout = styled(Link)`
     display: flex;
     align-self: center;
+    
     border: none;
     background: none;
     
@@ -225,4 +234,73 @@ export const Logout = styled(Link)`
         color: ${({ theme }) => theme.COLORS.BLUE};
         font-size: 3.2rem;
     }
+
+    > svg:hover {
+        animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    }
+`
+
+export const Profile = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    height: 5.6rem;
+    border: none;
+    background: none;
+    
+    cursor: pointer;
+
+    > svg {
+        color: ${({ theme }) => theme.COLORS.BLUE};
+        font-size: 3.2rem;
+    }
+    
+    > svg:hover {
+        animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    }
+
+    .user-menu {
+        display: none;
+    }
+    
+    .user-menu.active {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+
+        position: absolute;
+        margin-top: 23rem;
+        gap: 1rem;
+        padding: 1rem;
+
+        z-index: 9999;
+        
+        border-radius: 1rem;
+        border: 1px solid ${({ theme }) => theme.COLORS.BLUE};
+        
+        transition: 0.3s;
+        
+        background-color: ${({ theme }) => theme.COLORS.BLUE_200};
+        box-shadow:
+            0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+`
+
+export const ButtonMenu = styled.button`
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: 4rem;
+    padding: 0 1.6rem;
+    gap: 1rem;
+    
+    border: none;
+    border-radius: 0.5rem;
+    
+    font-size: 1.4rem;
+
+    color: ${({ theme }) => theme.COLORS.WHITE};
+    background-color: ${({ theme }) => theme.COLORS.BLUE_200};
 `

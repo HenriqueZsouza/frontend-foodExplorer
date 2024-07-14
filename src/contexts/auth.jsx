@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { message } from 'antd'
 
 import { api } from '../services/api'
 
@@ -26,9 +27,9 @@ function AuthProvider({ children }) {
 
     } catch (error) {
       if (error.response) {
-        alert(error.response.data.message)
+        message.error(error.response.data.message)
       } else {
-        alert("Não foi possível entrar.")
+        message.error("Não foi possível entrar.")
       }
 
       setLoading(false)
@@ -58,15 +59,15 @@ function AuthProvider({ children }) {
       localStorage.setItem("foodexplorer:user", JSON.stringify(user))
 
       setData({ user, token: data.token })
-      alert("Perfil atualizado com sucesso!")
+      message.success("Perfil atualizado com sucesso!")
 
       setLoading(false)
 
     } catch (error) {
       if (error.response) {
-        alert(error.response.data.message)
+        message.error(error.response.data.message)
       } else {
-        alert("Não foi possível atualizar o perfil.")
+        message.error("Não foi possível atualizar o perfil.")
       }
 
       setLoading(false)

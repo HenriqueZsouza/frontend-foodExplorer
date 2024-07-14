@@ -19,173 +19,171 @@ import { Container, Content, Form, Avatar, Infos, Logo } from './styles'
 
 export function Profile() {
 
-    const { user, updateProfile, loading } = useAuth()
-    const [name, setName] = useState(user.name)
-    const [email, setEmail] = useState(user.email)
-    const [passwordOld, setPasswordOld] = useState()
-    const [passwordNew, setPasswordNew] = useState()
+  const { user, updateProfile, loading } = useAuth()
+  const [name, setName] = useState(user.name)
+  const [email, setEmail] = useState(user.email)
+  const [passwordOld, setPasswordOld] = useState()
+  const [passwordNew, setPasswordNew] = useState()
 
-    const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
-    const [avatar, setAvatar] = useState(avatarUrl)
-    const [avatarFile, setAvatarFile] = useState(null)
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+  const [avatar, setAvatar] = useState(avatarUrl)
+  const [avatarFile, setAvatarFile] = useState(null)
 
-    async function handleUpdate() {
-        const updated = {
-            name,
-            email,
-            password: passwordNew,
-            old_password: passwordOld,
-        }
-
-        const userUpdated = Object.assign(user, updated)
-
-        await updateProfile({ user: userUpdated, avatarFile })
+  async function handleUpdate() {
+    const updated = {
+      name,
+      email,
+      password: passwordNew,
+      old_password: passwordOld,
     }
 
-    function handleChangeAvatar(event) {
-        const file = event.target.files[0]
-        setAvatarFile(file)
+    const userUpdated = Object.assign(user, updated)
 
-        const imagePreview = URL.createObjectURL(file)
-        setAvatar(imagePreview)
-    }
+    await updateProfile({ user: userUpdated, avatarFile })
+  }
 
-    return (
-        <ThemeProvider theme={ThemeDefault}>
+  function handleChangeAvatar(event) {
+    const file = event.target.files[0]
+    setAvatarFile(file)
 
-            <GlobalStyles />
-            <Container>
-                <Header />
-                <Content>
-                    <div className='card'>
-                        <Form>
-                            <Avatar>
-                                <img
-                                    src={avatar}
-                                    alt="Foto do usuário"
-                                />
+    const imagePreview = URL.createObjectURL(file)
+    setAvatar(imagePreview)
+  }
 
-                                <label htmlFor="avatar">
-                                    <FiCamera />
+  return (
+    <ThemeProvider theme={ThemeDefault}>
 
-                                    <input
-                                        id="avatar"
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleChangeAvatar}
-                                    />
-                                </label>
-                            </Avatar>
+      <GlobalStyles />
+      <Container>
+        <Header />
+        <Content>
+          <div className='card'>
+            <Form>
+              <Avatar>
+                <img
+                  src={avatar}
+                  alt="Foto do usuário"
+                />
 
-                            <div className='inputs'>
-                                <label>
-                                    <FiUser size={20} />
-                                    <input
-                                        type="text"
-                                        placeholder="Nome"
-                                        value={name}
-                                        onChange={e => setName(e.target.value)}
-                                    />
-                                </label>
+                <label htmlFor="avatar">
+                  <FiCamera />
 
-                                <label>
-                                    <FiMail size={20} />
-                                    <input
-                                        type="text"
-                                        placeholder="E-mail"
-                                        value={email}
-                                        onChange={e => setEmail(e.target.value)}
-                                    />
-                                </label>
+                  <input
+                    id="avatar"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleChangeAvatar}
+                  />
+                </label>
+              </Avatar>
 
-                                <label>
-                                    <FiLock size={20} />
-                                    <input
-                                        type="password"
-                                        placeholder="Senha atual"
-                                        onChange={e => setPasswordOld(e.target.value)}
-                                    />
-                                </label>
+              <div className='inputs'>
+                <label>
+                  <FiUser size={20} />
+                  <input
+                    type="text"
+                    placeholder="Nome"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                  />
+                </label>
 
-                                <label>
-                                    <FiLock size={20} />
-                                    <input
-                                        type="password"
-                                        placeholder="Nova senha"
-                                        onChange={e => setPasswordNew(e.target.value)}
-                                    />
-                                </label>
-                            </div>
+                <label>
+                  <FiMail size={20} />
+                  <input
+                    type="text"
+                    placeholder="E-mail"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                  />
+                </label>
 
-                            <Button
-                                title={loading ? "Salvando" : "Salvar"}
-                                onClick={handleUpdate}
-                                disabled={loading}
-                            />
-                        </Form>
+                <label>
+                  <FiLock size={20} />
+                  <input
+                    type="password"
+                    placeholder="Senha atual"
+                    onChange={e => setPasswordOld(e.target.value)}
+                  />
+                </label>
 
-                        {
-                            user.isAdmin ?
+                <label>
+                  <FiLock size={20} />
+                  <input
+                    type="password"
+                    placeholder="Nova senha"
+                    onChange={e => setPasswordNew(e.target.value)}
+                  />
+                </label>
+              </div>
 
-                                <Infos>
-                                    <Logo>
-                                        <div className="logo">
-                                            <img src={logo} alt="" />
-                                        </div>
-                                    </Logo>
+              <Button
+                title={loading ? "Salvando" : "Salvar"}
+                onClick={handleUpdate}
+                disabled={loading}
+              />
+            </Form>
 
-                                    <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
+            {user.isAdmin ?
+              <Infos>
+                <Logo>
+                  <div className="logo">
+                    <img src={logo} alt="" />
+                  </div>
+                </Logo>
 
-                                    <Link to="/orders">
-                                        <Button
-                                            title="Ver pedidos"
-                                            icon={FiShoppingBag}
-                                        />
-                                    </Link>
+                <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
 
-                                    <Link to="/createdish">
-                                        <Button
-                                            title="Criar novo Prato"
-                                            icon={FiPlus}
-                                        />
-                                    </Link>
-                                </Infos>
+                <Link to="/orders">
+                  <Button
+                    title="Ver pedidos"
+                    icon={FiShoppingBag}
+                  />
+                </Link>
 
-                                :
+                <Link to="/createdish">
+                  <Button
+                    title="Criar novo Prato"
+                    icon={FiPlus}
+                  />
+                </Link>
+              </Infos>
 
-                                <Infos>
-                                    <Logo>
-                                        <div className="logo">
-                                            <img src={logo} alt="" />
-                                        </div>
-                                    </Logo>
+              :
 
-                                    <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
+              <Infos>
+                <Logo>
+                  <div className="logo">
+                    <img src={logo} alt="" />
+                  </div>
+                </Logo>
 
-                                    <Link to="/orders">
-                                        <Button
-                                            title="Meus pedidos"
-                                            icon={FiShoppingBag}
-                                        />
-                                    </Link>
+                <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
 
-                                    <Button
-                                        title="Contato por e-mail"
-                                        icon={FiMail}
-                                        onClick={() => window.location = 'mailto:suporte@foodexplorer.com'}
-                                    />
+                <Link to="/orders">
+                  <Button
+                    title="Meus pedidos"
+                    icon={FiShoppingBag}
+                  />
+                </Link>
 
-                                    <Button
-                                        title="WhatsApp"
-                                        icon={BsWhatsapp}
-                                        onClick={() => window.open("https://api.whatsapp.com/send?phone=+999999999999&text=Oi pessoal do FoodExplorer! Gostaria de falar sobre o meu pedido!", '_blank')}
-                                    />
-                                </Infos>
-                        }
-                    </div>
-                </Content>
-                <Footer />
-            </Container>
-        </ThemeProvider>
-    )
+                <Button
+                  title="Contato por e-mail"
+                  icon={FiMail}
+                  onClick={() => window.location = 'mailto:suporte@foodexplorer.com'}
+                />
+
+                <Button
+                  title="WhatsApp"
+                  icon={BsWhatsapp}
+                  onClick={() => window.open("https://api.whatsapp.com/send?phone=+999999999999&text=Oi pessoal do FoodExplorer! Gostaria de falar sobre o meu pedido!", '_blank')}
+                />
+              </Infos>
+            }
+          </div>
+        </Content>
+        <Footer />
+      </Container>
+    </ThemeProvider>
+  )
 }
