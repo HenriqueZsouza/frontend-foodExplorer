@@ -11,11 +11,9 @@ export const Footer = () => {
             <span>food explorer</span>
           </div>
         </Logo>
-
         <p>
           © 2024 - Todos os direitos reservados.
         </p>
-
       </Content>
     </Container>
   )

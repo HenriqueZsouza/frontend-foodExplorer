@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/auth"
 import { AppRoutes } from "./appRoutes"
 import { AuthRoutes } from "./auth.routes"
 
-export function Routes() {
+export const Routes = () => {
   const { user } = useAuth()
 
   return (

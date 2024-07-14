@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Routes from './routes/index.jsx'
+import { Routes } from './routes/index.jsx'
 
 import { AuthProvider } from './contexts/auth.jsx'
 import { CartProvider } from './contexts/cart.jsx'

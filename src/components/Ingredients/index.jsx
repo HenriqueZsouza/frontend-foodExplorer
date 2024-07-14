@@ -39,136 +39,136 @@ import sorvete from '../../assets/sorvete.png'
 import tomate from '../../assets/tomate.png'
 import whiskey from '../../assets/whiskey.png'
 
-export function Ingredients({ ingredient }) {
+export const Ingredients = ({ ingredient }) => {
 
-    function fetchImageIngredient(name) {
-        let ingredient = name.toLowerCase().trim()
+  function fetchImageIngredient(name) {
+    let ingredient = name.toLowerCase().trim()
 
-        let ingredientImage
+    let ingredientImage
 
-        if (ingredient == "aguardente") {
-            return ingredientImage = aguardente
+    if (ingredient == "aguardente") {
+      return ingredientImage = aguardente
 
-        } else if (ingredient == "alface") {
-            return ingredientImage = alface
+    } else if (ingredient == "alface") {
+      return ingredientImage = alface
 
-        } else if (ingredient == "aspargo") {
-            return ingredientImage = aspargo
+    } else if (ingredient == "aspargo") {
+      return ingredientImage = aspargo
 
-        } else if (ingredient == "ameixa") {
-            return ingredientImage = ameixa
+    } else if (ingredient == "ameixa") {
+      return ingredientImage = ameixa
 
-        } else if (ingredient == "amêndoas") {
-            return ingredientImage = amendoas
+    } else if (ingredient == "amêndoas") {
+      return ingredientImage = amendoas
 
-        } else if (ingredient == "aniz") {
-            return ingredientImage = aniz
+    } else if (ingredient == "aniz") {
+      return ingredientImage = aniz
 
-        } else if (ingredient == "bacon") {
-            return ingredientImage = bacon
+    } else if (ingredient == "bacon") {
+      return ingredientImage = bacon
 
-        } else if (ingredient == "batata") {
-            return ingredientImage = batata
+    } else if (ingredient == "batata") {
+      return ingredientImage = batata
 
-        } else if (ingredient == "café") {
-            return ingredientImage = cafe
+    } else if (ingredient == "café") {
+      return ingredientImage = cafe
 
-        } else if (ingredient == "camarão") {
-            return ingredientImage = camarao
+    } else if (ingredient == "camarão") {
+      return ingredientImage = camarao
 
-        } else if (ingredient == "canela") {
-            return ingredientImage = canela
+    } else if (ingredient == "canela") {
+      return ingredientImage = canela
 
-        } else if (ingredient == "cebola") {
-            return ingredientImage = cebola
+    } else if (ingredient == "cebola") {
+      return ingredientImage = cebola
 
-        } else if (ingredient == "claras") {
-            return ingredientImage = claras
+    } else if (ingredient == "claras") {
+      return ingredientImage = claras
 
-        } else if (ingredient == "coca-cola") {
-            return ingredientImage = coca
+    } else if (ingredient == "coca-cola") {
+      return ingredientImage = coca
 
-        } else if (ingredient == "damasco") {
-            return ingredientImage = damasco
+    } else if (ingredient == "damasco") {
+      return ingredientImage = damasco
 
-        } else if (ingredient == "farinha") {
-            return ingredientImage = farinha
+    } else if (ingredient == "farinha") {
+      return ingredientImage = farinha
 
-        } else if (ingredient == "filé") {
-            return ingredientImage = filé
+    } else if (ingredient == "filé") {
+      return ingredientImage = filé
 
-        } else if (ingredient == "limão") {
-            return ingredientImage = limao
+    } else if (ingredient == "limão") {
+      return ingredientImage = limao
 
-        } else if (ingredient == "maçã") {
-            return ingredientImage = maca
+    } else if (ingredient == "maçã") {
+      return ingredientImage = maca
 
-        } else if (ingredient == "manjericão") {
-            return ingredientImage = manjericao
+    } else if (ingredient == "manjericão") {
+      return ingredientImage = manjericao
 
-        } else if (ingredient == "maracujá") {
-            return ingredientImage = maracuja
+    } else if (ingredient == "maracujá") {
+      return ingredientImage = maracuja
 
-        } else if (ingredient == "massa") {
-            return ingredientImage = massa
+    } else if (ingredient == "massa") {
+      return ingredientImage = massa
 
-        } else if (ingredient == "morango") {
-            return ingredientImage = morango
+    } else if (ingredient == "morango") {
+      return ingredientImage = morango
 
-        } else if (ingredient == "negroni") {
-            return ingredientImage = negroni
+    } else if (ingredient == "negroni") {
+      return ingredientImage = negroni
 
-        } else if (ingredient == "pão") {
-            return ingredientImage = pao
+    } else if (ingredient == "pão") {
+      return ingredientImage = pao
 
-        } else if (ingredient == "pão naan") {
-            return ingredientImage = paoNaan
+    } else if (ingredient == "pão naan") {
+      return ingredientImage = paoNaan
 
-        } else if (ingredient == "pepino") {
-            return ingredientImage = pepino
+    } else if (ingredient == "pepino") {
+      return ingredientImage = pepino
 
-        } else if (ingredient == "pêssego") {
-            return ingredientImage = pessego
+    } else if (ingredient == "pêssego") {
+      return ingredientImage = pessego
 
-        } else if (ingredient == "pesto") {
-            return ingredientImage = pesto
+    } else if (ingredient == "pesto") {
+      return ingredientImage = pesto
 
-        } else if (ingredient == "presunto") {
-            return ingredientImage = presunto
+    } else if (ingredient == "presunto") {
+      return ingredientImage = presunto
 
-        } else if (ingredient == "queijo") {
-            return ingredientImage = queijo
+    } else if (ingredient == "queijo") {
+      return ingredientImage = queijo
 
-        } else if (ingredient == "rabanete") {
-            return ingredientImage = rabanete
+    } else if (ingredient == "rabanete") {
+      return ingredientImage = rabanete
 
-        } else if (ingredient == "rucula") {
-            return ingredientImage = rucula
+    } else if (ingredient == "rucula") {
+      return ingredientImage = rucula
 
-        } else if (ingredient == "sorvete") {
-            return ingredientImage = sorvete
+    } else if (ingredient == "sorvete") {
+      return ingredientImage = sorvete
 
-        } else if (ingredient == "tomate") {
-            return ingredientImage = tomate
+    } else if (ingredient == "tomate") {
+      return ingredientImage = tomate
 
-        } else if (ingredient == "whiskey") {
-            return ingredientImage = whiskey
+    } else if (ingredient == "whiskey") {
+      return ingredientImage = whiskey
 
-        } else {
-            return ingredientImage = imagePlaceholder
-        }
+    } else {
+      return ingredientImage = imagePlaceholder
     }
+  }
 
-    let ingredientImage = fetchImageIngredient(ingredient)
+  let ingredientImage = fetchImageIngredient(ingredient)
 
-    return (
-        <Container>
-            <div className="ingredients">
-                <div>
-                    <img src={ingredientImage} alt="Imagem do ingrediente" />
-                    <p>{ingredient}</p>
-                </div>
-            </div>
-        </Container>
-    )
+  return (
+    <Container>
+      <div className="ingredients">
+        <div>
+          <img src={ingredientImage} alt="Imagem do ingrediente" />
+          <p>{ingredient}</p>
+        </div>
+      </div>
+    </Container>
+  )
 }

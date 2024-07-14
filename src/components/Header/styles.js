@@ -13,7 +13,6 @@ export const Container = styled.header`
     justify-content: center;
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_600};
 
-    // ================= KEYFRAMES ================= //
     @keyframes scale-up-center {
         0% {
             transform: scale(1);

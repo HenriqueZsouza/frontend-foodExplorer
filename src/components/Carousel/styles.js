@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const Container = styled.footer`
     width: 100%;
@@ -14,7 +14,7 @@ export const Container = styled.footer`
             transform: scale(1.2);
         }
     }
-`;
+`
 
 export const Content = styled.div`
     .swiper {
@@ -23,7 +23,6 @@ export const Content = styled.div`
     }
     
     .swiper-slide {
-        /* Center slide text vertically */
         display: -webkit-box;
         display: -ms-flexbox;
         display: -webkit-flex;
@@ -62,12 +61,4 @@ export const Content = styled.div`
     .swiper-button-next {
         background: linear-gradient(to right, transparent 0%, ${({ theme }) => theme.COLORS.BACKGROUND_900} 100% 0%, transparent 100%);
     }
-`;
-
-
-
-
-
-
-
-
+`
