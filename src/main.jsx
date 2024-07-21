@@ -4,7 +4,6 @@ import { Routes } from './routes/index.jsx'
 
 import { AuthProvider } from './contexts/auth.jsx'
 import { CartProvider } from './contexts/cart.jsx'
-import { FavoritesProvider } from './contexts/favorites.jsx'
 
 import darkTheme from './styles/theme.js'
 import GlobalStyles from './styles/global.js'
@@ -17,9 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <GlobalStyles />
       <AuthProvider>
         <CartProvider>
-          <FavoritesProvider>
-            <Routes />
-          </FavoritesProvider>
+          <Routes />
         </CartProvider>
       </AuthProvider>
     </ThemeProvider>

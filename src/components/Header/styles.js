@@ -13,9 +13,6 @@ export const Container = styled.header`
   justify-content: center;
   background-color: ${({ theme }) => theme.COLORS.BACKGROUND_600};
 
-  -webkit-box-shadow: 0px 0px 10px 5px #193746; 
-  box-shadow: 0px 0px 10px 5px #193746;
-
   @keyframes scale-up-center {
       0% {
           transform: scale(1);
@@ -54,7 +51,7 @@ export const Content = styled.div`
   align-items: center;
   white-space: nowrap;
   
-  width: 121.2rem;
+  width: 100vw;
   height: 10.4rem;
   
   padding: 0 4rem;
@@ -63,6 +60,7 @@ export const Content = styled.div`
   .nav-menu {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       
       width: 100%;
       gap: 3.2rem;
@@ -145,7 +143,6 @@ export const Logo = styled.div`
   
   h1 {
       font-size: 2.51109rem;
-      animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
   }
 
   a {
@@ -192,7 +189,7 @@ export const Search = styled.div`
   }
 `
 
-export const Button = styled.button`
+export const ButtonStyle = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;

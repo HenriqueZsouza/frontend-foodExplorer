@@ -61,7 +61,6 @@ export function PaymentCard() {
     setPixActive(false)
   }
 
-  const btn = document.getElementById('finishPaymentButton')
   const disableButton = () => {
     setDisabledButton(true)
 
@@ -92,7 +91,7 @@ export function PaymentCard() {
 
         {isCartVisible &&
           <div className="cart" id="cart">
-            <img src={cart} alt="Imagem do carrinho de compras" />
+            <img src={cart} alt="Imagem do pedido de compras" />
             <p>Selecione uma forma de pagamento acima!</p>
           </div>
         }

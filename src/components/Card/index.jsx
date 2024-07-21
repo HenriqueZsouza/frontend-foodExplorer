@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import { BsReceipt } from 'react-icons/bs'
 import { FiMinus, FiPlus } from 'react-icons/fi'
 import { CiEdit } from "react-icons/ci"
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { message } from "antd"
 
 import { Button } from '../Button'
@@ -11,7 +10,6 @@ import { ButtonText } from "../ButtonText"
 
 import { useAuth } from "../../contexts/auth"
 import { useCart } from '../../contexts/cart'
-import { useFavorites } from '../../contexts/favorites'
 
 import { api } from '../../services/api'
 
@@ -23,9 +21,6 @@ export function Card({ data, ...rest }) {
   const { user } = useAuth()
 
   const imageURL = data.image ? `${api.defaults.baseURL}/files/${data.image}` : imagePlaceholder
-
-  const { favorites, addDishToFavorite, removeDishFromFavorite } = useFavorites()
-  const isFavorite = favorites.some((dish) => dish.title === data.title)
 
   const { handleAddDishToCart } = useCart()
 
@@ -72,17 +67,6 @@ export function Card({ data, ...rest }) {
           :
 
           <Content>
-            <button
-              className="favButton"
-              onClick={() => isFavorite ? removeDishFromFavorite(data) : addDishToFavorite(data)}
-            >
-              {isFavorite ?
-                <AiFillHeart />
-                :
-                <AiOutlineHeart />
-              }
-            </button>
-
             <div className="container">
               <img src={imageURL} alt="Imagem do prato" />
               <Link to={`/details/${data.id}`}>

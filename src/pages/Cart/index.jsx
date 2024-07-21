@@ -61,7 +61,7 @@ export function Cart() {
 
     if (cart.length < 1) {
       navigate(-1)
-      return message.warning("Seu carrinho está vazio. Adicione algo antes de tentar pagar.")
+      return message.warning("Seu pedido está vazio. Adicione algo antes de tentar pagar.")
     }
 
     if (!pixActive && num.length < 16) {
@@ -91,7 +91,7 @@ export function Cart() {
       })
       .catch(error => {
         if (error.response) {
-          message.warning("Não foi possível cadastrar")
+          message.warning("Não foi possível cadastrar pedido")
         } else {
           message.warning(error.response.data.message)
         }
@@ -190,7 +190,7 @@ export function Cart() {
 
                 {isCartVisible &&
                   <div className="cart" id="cart">
-                    <img src={cartImg} alt="Imagem do carrinho de compras" />
+                    <img src={cartImg} alt="Imagem do pedido de compras" />
                     <p>Selecione uma forma de pagamento acima!</p>
                   </div>
                 }

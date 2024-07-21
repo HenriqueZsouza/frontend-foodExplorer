@@ -3,7 +3,7 @@ import { useCart } from '../../contexts/cart'
 import { Container } from "./styles"
 
 export function OrderCard({ data }) {
-  const { handleRemoveDishFromCart, paymentAccept } = useCart()
+  const { handleRemoveDishFromCart } = useCart()
 
   return (
     <Container>

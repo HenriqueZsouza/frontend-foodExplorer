@@ -12,7 +12,7 @@ As seguintes tecnologias foram utilizadas na criação deste projeto:
 - [Styled Components](https://styled-components.com)
 - [Ant Design](https://https://ant.design)
 
-#### 💻 Executando o FrontEnd
+#### 💻 Executando aplicação
 
 # Instale as dependências necessárias
 $ npm install
@@ -23,7 +23,7 @@ $ npm run dev
 # O terminal irá exibir o endereço local onde a aplicação está sendo executada. O endereço usado na criação do projeto foi este:
   http://localhost:5173/
 
-Aplicação só está disponível para rodar em localhost, para isso você precisa clonar o repositorio do backend, disponivel em: 
+Aplicação só está disponível para rodar em localhost, para isso você precisa clonar o repositório do backend, disponivel em: 
 
   https://github.com/HenriqueZsouza/backend-foodExplorer
 

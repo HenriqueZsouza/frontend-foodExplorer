@@ -18,7 +18,7 @@ function CartProvider({ children }) {
 
       const orderExists = cart.some((userOrder) => userOrder.title === order.title)
       if (orderExists) {
-        return message.warning("Esse item já está no carrinho")
+        return message.warning("Esse item já está no pedido")
       }
 
       setCart(prevState => [...prevState, order])
@@ -26,11 +26,11 @@ function CartProvider({ children }) {
       if (error.response) {
         message.warning(error.response.data.message)
       } else {
-        message.warning("Não foi possível adicionar o item ao carrinho")
+        message.warning("Não foi possível adicionar o item ao pedido")
       }
     }
 
-    message.success("Item adicionado ao carrinho")
+    message.success("Item adicionado ao pedido")
   }
 
   function handleRemoveDishFromCart(deleted) {

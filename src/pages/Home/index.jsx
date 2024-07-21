@@ -4,8 +4,6 @@ import { Navigation } from "swiper"
 import "swiper/css"
 import "swiper/css/navigation"
 
-import { useFavorites } from '../../contexts/favorites'
-
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
 import { Card } from "../../components/Card"
@@ -18,25 +16,18 @@ export function Home() {
   const [dishes, setDishes] = useState([])
   const [search, setSearch] = useState("")
 
-  const { favorites } = useFavorites()
-  async function handleFavorites(favorite) {
-    if (favorite.length === 0) {
-      return
-    }
-    setDishes(favorites)
-  }
-
   useEffect(() => {
     async function fetchDishes() {
       const response = await api.get(`/dishes?title=${search}`)
       setDishes(response.data)
     }
     fetchDishes()
-  }, [search, favorites.length === 0])
+  }, [search])
 
-  return (
+  return (<>
     <Container>
-      <Header search={setSearch} favoritesFilter={() => handleFavorites(favorites)} />
+
+      <Header search={setSearch} />
       <Content>
         <Banner>
           <img src={background} alt="Imagem de ingredientes" />
@@ -178,5 +169,5 @@ export function Home() {
       </Content>
       <Footer />
     </Container>
-  )
+  </>)
 }

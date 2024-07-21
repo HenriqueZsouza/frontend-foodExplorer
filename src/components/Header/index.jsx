@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom"
 import { BsReceipt } from 'react-icons/bs'
-import { FiSearch, FiLogOut, FiUser, FiShoppingBag, FiHeart } from 'react-icons/fi'
+import { FiSearch, FiLogOut, FiUser, FiShoppingBag, FiHeart, FiPlus } from 'react-icons/fi'
 
+import { Button } from '../Button'
 import { useCart } from '../../contexts/cart'
 import { useAuth } from '../../contexts/auth'
 import logo from '../../assets/logo.svg'
-import { Container, Content, Logo, Search, Logout, Button, ButtonMenu, Profile } from "./styles"
+import { Container, Content, Logo, Search, Logout, ButtonStyle, ButtonMenu, Profile } from "./styles"
 
-export function Header({ search, favoritesFilter }) {
+export function Header({ search }) {
   const { user } = useAuth()
   const { signOut } = useAuth()
 
@@ -16,10 +17,6 @@ export function Header({ search, favoritesFilter }) {
   function mobileMenu() {
     document.getElementById('hamburger').classList.toggle('active')
     document.getElementById('nav-menu').classList.toggle('active')
-  }
-
-  function userMenu() {
-    document.getElementById('user-menu').classList.toggle('active')
   }
 
   return (
@@ -41,7 +38,6 @@ export function Header({ search, favoritesFilter }) {
         </div>
 
         <div className="nav-menu" id="nav-menu">
-
           <Search>
             <label>
               <FiSearch size={24} />
@@ -53,67 +49,35 @@ export function Header({ search, favoritesFilter }) {
             </label>
           </Search>
 
-          {
-            user.isAdmin ?
+          {user.isAdmin ?
+            <>
+              <Link to="/createdish">
+                <Button
+                  title="Criar novo Prato"
+                  style={{ backgroundColor: '#92000E' }}
+                  icon={FiPlus}
+                />
+              </Link>
 
               <Link to="/orders">
-                <Button
+                <ButtonStyle
                   type='button'
                 >
                   <BsReceipt size={24} />
-                  Ver pedidos <span>({orders.length})</span>
-                </Button>
+                  Pedidos <span>({cart.length})</span>
+                </ButtonStyle>
               </Link>
-
-              :
-
+            </>
+            : <>
               <Link to="/cart">
-                <Button
+                <ButtonStyle
                   type='button'
                 >
                   <BsReceipt size={24} />
-                  Carrinho <span>({cart.length})</span>
-                </Button>
+                  Pedidos <span>({cart.length})</span>
+                </ButtonStyle>
               </Link>
-          }
-
-          {
-            user.isAdmin ?
-
-              <Link to="/profile">
-                <Profile>
-                  <FiUser />
-                </Profile>
-              </Link>
-
-              :
-
-              <Profile onClick={userMenu}>
-                <FiUser />
-                <div className="user-menu" id="user-menu">
-                  <Link to="/orders">
-                    <ButtonMenu>
-                      <FiShoppingBag size={24} />
-                      Meus Pedidos
-                    </ButtonMenu>
-                  </Link>
-
-                  <Link to="/">
-                    <ButtonMenu onClick={favoritesFilter}>
-                      <FiHeart size={24} />
-                      Meus Favoritos
-                    </ButtonMenu>
-                  </Link>
-
-                  <Link to="/profile">
-                    <ButtonMenu>
-                      <FiUser size={24} />
-                      Meu Perfil
-                    </ButtonMenu>
-                  </Link>
-                </div>
-              </Profile>
-          }
+            </>}
 
           <Logout to="/" onClick={signOut}>
             <FiLogOut />
