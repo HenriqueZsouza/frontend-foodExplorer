@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { RiArrowLeftSLine } from 'react-icons/ri'
 import { FiCamera } from "react-icons/fi"
-import { ThemeProvider } from 'styled-components'
 
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
@@ -18,8 +17,6 @@ import { PageError } from "../../components/PageError"
 import { api } from "../../services/api"
 import { useAuth } from "../../contexts/auth"
 
-import GlobalStyles from '../../styles/global'
-import darkTheme from '../../styles/theme'
 import { Container, Content, Form, Image } from "./styles.js"
 import { message } from "antd"
 
@@ -152,146 +149,144 @@ export function EditDish() {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <GlobalStyles />
-      <Container>
-        <Header />
 
-        {user.isAdmin ?
-          <Content>
-            {
-              data &&
+    <Container>
+      <Header />
 
-              <Form>
-                <header>
-                  <Link to="/">
-                    <ButtonText title="Voltar" icon={RiArrowLeftSLine} />
-                  </Link>
-                  <h1>Editar prato</h1>
-                </header>
+      {user.isAdmin ?
+        <Content>
+          {
+            data &&
 
-                <div className="details">
-                  <div className="dishImage">
-                    <p>Imagem do Prato</p>
+            <Form>
+              <header>
+                <Link to="/">
+                  <ButtonText title="Voltar" icon={RiArrowLeftSLine} />
+                </Link>
+                <h1>Editar prato</h1>
+              </header>
 
-                    <Image>
-                      <img
-                        src={image ? image : imageURL}
-                        alt="Foto do prato"
+              <div className="details">
+                <div className="dishImage">
+                  <p>Imagem do Prato</p>
+
+                  <Image>
+                    <img
+                      src={image ? image : imageURL}
+                      alt="Foto do prato"
+                    />
+
+                    <label htmlFor="image">
+                      <FiCamera />
+
+                      <input
+                        id="image"
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleChangeImage}
                       />
+                    </label>
+                  </Image>
+                </div>
 
-                      <label htmlFor="image">
-                        <FiCamera />
-
-                        <input
-                          id="image"
-                          type="file"
-                          name="image"
-                          accept="image/*"
-                          onChange={handleChangeImage}
-                        />
-                      </label>
-                    </Image>
-                  </div>
-
-                  <div className="dishDetails">
-                    <div className="dishName">
-                      <div className="dish">
-                        <p>Nome do prato</p>
-                        <Input
-                          placeholder="Ex.: Salada Caesar"
-                          type="text"
-                          value={title}
-                          onChange={e => setTitle(e.target.value)}
-                        />
-                      </div>
-
-                      <div className="dishCategory">
-                        <p>Categoria</p>
-
-                        <select value={category} onChange={e => setCategory(e.target.value)}>
-                          <option value="default" disabled>Selecione a categoria</option>
-                          <option value="dishes">Pratos</option>
-                          <option value="drinks">Bebidas</option>
-                          <option value="dessert">Sobremesas</option>
-                        </select>
-                      </div>
+                <div className="dishDetails">
+                  <div className="dishName">
+                    <div className="dish">
+                      <p>Nome do prato</p>
+                      <Input
+                        placeholder="Ex.: Salada Caesar"
+                        type="text"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                      />
                     </div>
 
-                    <div className="dishIngredients">
-                      <div className="ingredientsTag">
-                        <div>
-                          <p>Ingredientes</p>
-                          <div className="ingredients">
-                            {
-                              ingredients.map((ingredient, index) => (
-                                <IngredientsTag
-                                  key={String(index)}
-                                  value={ingredient}
-                                  onClick={() => handleRemoveIngredient(ingredient)}
-                                />
-                              ))
-                            }
+                    <div className="dishCategory">
+                      <p>Categoria</p>
 
-                            <IngredientsTag
-                              isNew
-                              placeholder="Adicionar"
-                              onChange={e => setNewIngredient(e.target.value)}
-                              value={newIngredient}
-                              onClick={handleAddIngredient}
-                            />
-                          </div>
+                      <select value={category} onChange={e => setCategory(e.target.value)}>
+                        <option value="default" disabled>Selecione a categoria</option>
+                        <option value="dishes">Pratos</option>
+                        <option value="drinks">Bebidas</option>
+                        <option value="dessert">Sobremesas</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="dishIngredients">
+                    <div className="ingredientsTag">
+                      <div>
+                        <p>Ingredientes</p>
+                        <div className="ingredients">
+                          {
+                            ingredients.map((ingredient, index) => (
+                              <IngredientsTag
+                                key={String(index)}
+                                value={ingredient}
+                                onClick={() => handleRemoveIngredient(ingredient)}
+                              />
+                            ))
+                          }
+
+                          <IngredientsTag
+                            isNew
+                            placeholder="Adicionar"
+                            onChange={e => setNewIngredient(e.target.value)}
+                            value={newIngredient}
+                            onClick={handleAddIngredient}
+                          />
                         </div>
                       </div>
+                    </div>
 
-                      <div className="price">
-                        <p>Preço</p>
-                        <Input
-                          placeholder="R$ 00,00"
-                          type="number"
-                          value={price}
-                          onChange={e => setPrice(e.target.value)}
-                        />
-                      </div>
+                    <div className="price">
+                      <p>Preço</p>
+                      <Input
+                        placeholder="R$ 00,00"
+                        type="number"
+                        value={price}
+                        onChange={e => setPrice(e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div className="textarea">
-                  <p>Descrição</p>
-                  <Textarea
-                    placeholder="Fale brevemente sobre o prato, seus ingredientes e composição"
-                    defaultValue={description}
-                    onChange={e => setDescription(e.target.value)}
-                  />
-                </div>
+              <div className="textarea">
+                <p>Descrição</p>
+                <Textarea
+                  placeholder="Fale brevemente sobre o prato, seus ingredientes e composição"
+                  defaultValue={description}
+                  onChange={e => setDescription(e.target.value)}
+                />
+              </div>
 
-              </Form>
-            }
+            </Form>
+          }
 
-            <div className="button">
-              <Button
-                className="deleteButton"
-                title={loadingDelete ? "Excluindo prato" : "Excluir prato"}
-                onClick={handleRemoveDish}
-                disabled={loadingDelete}
-              />
-              <Button
-                title={loading ? "Salvando alterações" : "Salvar alterações"}
-                onClick={handleUpdateDish}
-                disabled={loading}
-              />
-            </div>
+          <div className="button">
+            <Button
+              className="deleteButton"
+              title={loadingDelete ? "Excluindo prato" : "Excluir prato"}
+              onClick={handleRemoveDish}
+              disabled={loadingDelete}
+            />
+            <Button
+              title={loading ? "Salvando alterações" : "Salvar alterações"}
+              onClick={handleUpdateDish}
+              disabled={loading}
+            />
+          </div>
 
-          </Content>
+        </Content>
 
-          :
+        :
 
-          <PageError />
-        }
+        <PageError />
+      }
 
-        <Footer />
-      </Container>
-    </ThemeProvider>
+      <Footer />
+    </Container>
   )
 }

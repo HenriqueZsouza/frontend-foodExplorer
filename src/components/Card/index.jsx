@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { BsReceipt } from 'react-icons/bs'
 import { FiMinus, FiPlus } from 'react-icons/fi'
+import { CiEdit } from "react-icons/ci"
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { message } from "antd"
 
@@ -61,8 +62,8 @@ export function Card({ data, ...rest }) {
               <h1 className="price">R$ {data.price}</h1>
               <Link to={`/editDish/${data.id}`}>
                 <Button
-                  title="editar prato"
-                  icon={BsReceipt}
+                  title="Editar prato"
+                  icon={CiEdit}
                 />
               </Link>
             </div>

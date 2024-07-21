@@ -2,8 +2,7 @@ import styled from "styled-components"
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  
+  flex-direction: column;  
   max-width: 110.6rem;
   height: 100vh;
   
@@ -12,21 +11,6 @@ export const Container = styled.div`
   
   justify-content: space-between;
   align-items: center;
-
-  animation: puff-in-center 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
-
-  @keyframes puff-in-center {
-      0% {
-          transform: scale(2);
-          filter: blur(4px);
-          opacity: 0;
-      }
-      100% {
-          transform: scale(1);
-          filter: blur(0px);
-          opacity: 1;
-      }
-  }
 
   @media only screen and (min-width: 768px) {
       flex-direction: row;
@@ -42,12 +26,10 @@ export const Form = styled.form`
   max-width: 47.6rem;
   width: 100%;
   
-  padding: 6.4rem;
+  padding: 4.5rem;
   border-radius: 1.6rem;
 
   background-color: ${({ theme }) => theme.COLORS.BLUE_200};
-  -webkit-box-shadow: 0px 0px 10px 5px #193746; 
-  box-shadow: 0px 0px 10px 5px #193746;
 
   > h2 {
       font-family: 'Poppins', sans-serif;

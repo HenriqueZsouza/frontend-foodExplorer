@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { ThemeProvider } from 'styled-components'
 
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
@@ -8,8 +7,6 @@ import { api } from '../../services/api'
 import { useAuth } from "../../contexts/auth"
 import { useCart } from '../../contexts/cart'
 
-import darkTheme from '../../styles/theme'
-import GlobalStyles from '../../styles/global'
 import { Container, Content, Table } from "./styles.js"
 
 export function Orders() {
@@ -50,87 +47,84 @@ export function Orders() {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <GlobalStyles />
-      <Container>
-        <Header />
-        <Content>
-          <h1>Pedidos</h1>
+    <Container>
+      <Header />
+      <Content>
+        <h1>Pedidos</h1>
 
-          <Table>
-            <table>
-              <thead>
+        <Table>
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Código</th>
+                <th>Detalhamento</th>
+                <th>Data e hora</th>
+              </tr>
+            </thead>
+
+            {orders.length < 1 &&
+
+              <tbody>
                 <tr>
-                  <th>Status</th>
-                  <th>Código</th>
-                  <th>Detalhamento</th>
-                  <th>Data e hora</th>
+                  <td colSpan="4">
+                    <div className="zeroOrders">
+                      <p>Não existem pedidos cadastrados ainda!</p>
+                    </div>
+                  </td>
                 </tr>
-              </thead>
+              </tbody>
+            }
 
-              {orders.length < 1 &&
+            {
+              user.isAdmin ?
 
-                <tbody>
-                  <tr>
-                    <td colSpan="4">
-                      <div className="zeroOrders">
-                        <p>Não existem pedidos cadastrados ainda!</p>
-                      </div>
-                    </td>
-                  </tr>
+                <tbody className="order">
+
+                  {orders &&
+                    orders.map(order => (
+                      <tr key={String(order.id)}>
+                        <td>
+                          <select defaultValue={order.orderStatus} onChange={event => handleOrderStatus(order, event)}>
+                            <option value="🟡 Pendente">🟡 Pendente</option>
+                            <option value="🟠 Preparando">🟠 Preparando</option>
+                            <option value="🟢 Entregue">🟢 Entregue</option>
+                            <option value="🔴 Cancelado">🔴 Cancelado</option>
+                          </select>
+                        </td>
+                        <td>0000{order.id}</td>
+                        <td>
+                          {order.items.map((item) => (
+                            <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
+                          ))}
+                        </td>
+                        <td>{formatDate(order.created_at)}</td>
+                      </tr>
+                    ))
+                  }
                 </tbody>
-              }
-
-              {
-                user.isAdmin ?
-
-                  <tbody className="order">
-
-                    {orders &&
-                      orders.map(order => (
-                        <tr key={String(order.id)}>
-                          <td>
-                            <select defaultValue={order.orderStatus} onChange={event => handleOrderStatus(order, event)}>
-                              <option value="🟡 Pendente">🟡 Pendente</option>
-                              <option value="🟠 Preparando">🟠 Preparando</option>
-                              <option value="🟢 Entregue">🟢 Entregue</option>
-                              <option value="🔴 Cancelado">🔴 Cancelado</option>
-                            </select>
-                          </td>
-                          <td>0000{order.id}</td>
-                          <td>
-                            {order.items.map((item) => (
-                              <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
-                            ))}
-                          </td>
-                          <td>{formatDate(order.created_at)}</td>
-                        </tr>
-                      ))
-                    }
-                  </tbody>
-                  :
-                  <tbody className="order">
-                    {orders &&
-                      orders.map(order => (
-                        <tr key={String(order.id)}>
-                          <td>{order.orderStatus}</td>
-                          <td>0000{order.id}</td>
-                          <td>
-                            {order.items.map((item) => (
-                              <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
-                            ))}
-                          </td>
-                          <td>{formatDate(order.created_at)}</td>
-                        </tr>
-                      ))
-                    }
-                  </tbody>
-              }
-            </table>
-          </Table>
-        </Content>
-        <Footer />
-      </Container>
-    </ThemeProvider>
+                :
+                <tbody className="order">
+                  {orders &&
+                    orders.map(order => (
+                      <tr key={String(order.id)}>
+                        <td>{order.orderStatus}</td>
+                        <td>0000{order.id}</td>
+                        <td>
+                          {order.items.map((item) => (
+                            <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
+                          ))}
+                        </td>
+                        <td>{formatDate(order.created_at)}</td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+            }
+          </table>
+        </Table>
+      </Content>
+      <Footer />
+    </Container>
   )
 }

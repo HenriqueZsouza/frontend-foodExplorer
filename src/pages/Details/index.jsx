@@ -3,7 +3,6 @@ import { message } from "antd"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
-import { ThemeProvider } from 'styled-components'
 import { RiArrowLeftSLine } from 'react-icons/ri'
 import { FiMinus, FiPlus } from 'react-icons/fi'
 import { BsReceipt } from 'react-icons/bs'
@@ -19,8 +18,6 @@ import { api } from "../../services/api"
 import { useAuth } from "../../contexts/auth"
 import { useCart } from '../../contexts/cart'
 
-import GlobalStyles from '../../styles/global'
-import darkTheme from '../../styles/theme'
 import { Container, Content, Ingredient, PurchaseCard } from "./styles.js"
 
 export function Details() {
@@ -66,91 +63,89 @@ export function Details() {
   }, [])
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <GlobalStyles />
-      <Container>
-        <Header />
-        {data &&
-          <Content>
-            <Link>
-              <ButtonText
-                title="Voltar"
-                icon={RiArrowLeftSLine}
-                onClick={handleBack}
-              />
-            </Link>
 
-            <div className="content">
+    <Container>
+      <Header />
+      {data &&
+        <Content>
+          <Link>
+            <ButtonText
+              title="Voltar"
+              icon={RiArrowLeftSLine}
+              onClick={handleBack}
+            />
+          </Link>
 
-              <div className="dish">
-                <img src={imageURL} alt="Logo" />
-                <div className="description">
+          <div className="content">
 
-                  <h1>{data.title}</h1>
+            <div className="dish">
+              <img src={imageURL} alt="Logo" />
+              <div className="description">
 
-                  <h3>{data.description}</h3>
+                <h1>{data.title}</h1>
 
-                  <Ingredient>
-                    {data.ingredients.map(ingredient => (
-                      <Ingredients
-                        key={String(ingredient.id)}
-                        ingredient={ingredient.name}
-                      />
-                    ))
-                    }
-                  </Ingredient>
+                <h3>{data.description}</h3>
 
-                  <div className="price">
-                    <h4>R$ {data.price}</h4>
+                <Ingredient>
+                  {data.ingredients.map(ingredient => (
+                    <Ingredients
+                      key={String(ingredient.id)}
+                      ingredient={ingredient.name}
+                    />
+                  ))
+                  }
+                </Ingredient>
 
-                    <div className="purchaseCard">
-                      {user.isAdmin ?
+                <div className="price">
+                  <h4>R$ {data.price}</h4>
 
-                        <PurchaseCard>
-                          {
-                            data &&
-                            <Link to={`/editdish/${data.id}`}>
-                              <Button
-                                title="editar prato"
-                                icon={BsReceipt}
-                              />
-                            </Link>
-                          }
-                        </PurchaseCard>
+                  <div className="purchaseCard">
+                    {user.isAdmin ?
 
-                        :
-
-                        <PurchaseCard>
-                          <div className="counter">
-                            <ButtonText
-                              icon={FiMinus}
-                              onClick={decrease}
+                      <PurchaseCard>
+                        {
+                          data &&
+                          <Link to={`/editdish/${data.id}`}>
+                            <Button
+                              title="editar prato"
+                              icon={BsReceipt}
                             />
-                            <span>{quantity.toString().padStart(2, '0')}</span>
-                            <ButtonText
-                              icon={FiPlus}
-                              onClick={increase}
-                            />
-                          </div>
+                          </Link>
+                        }
+                      </PurchaseCard>
 
-                          <Button
-                            title="incluir"
-                            icon={BsReceipt}
-                            onClick={() => handleAddDishToCart(data, quantity, imageURL)}
-                            style={{ height: 56, width: 92, padding: '12px 4px' }}
+                      :
+
+                      <PurchaseCard>
+                        <div className="counter">
+                          <ButtonText
+                            icon={FiMinus}
+                            onClick={decrease}
                           />
-                        </PurchaseCard>
-                      }
-                    </div>
+                          <span>{quantity.toString().padStart(2, '0')}</span>
+                          <ButtonText
+                            icon={FiPlus}
+                            onClick={increase}
+                          />
+                        </div>
+
+                        <Button
+                          title="incluir"
+                          icon={BsReceipt}
+                          onClick={() => handleAddDishToCart(data, quantity, imageURL)}
+                          style={{ height: 56, width: 92, padding: '12px 4px' }}
+                        />
+                      </PurchaseCard>
+                    }
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-          </Content>
-        }
-        <Footer />
-      </Container>
-    </ThemeProvider>
+        </Content>
+      }
+      <Footer />
+    </Container>
   )
 }

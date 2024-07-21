@@ -154,6 +154,10 @@ export const Form = styled.form`
 
     .price {
         max-width: 15rem;
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+        }       
     }
 
     @media only screen and (min-width: 768px) {

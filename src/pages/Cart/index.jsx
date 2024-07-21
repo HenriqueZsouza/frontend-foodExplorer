@@ -1,8 +1,7 @@
-import { Container, Content, PaymentCard } from "./styles.js"
-
-import { ThemeProvider } from 'styled-components'
-import GlobalStyles from '../../styles/global'
-import darkTheme from '../../styles/theme'
+import { useState } from 'react'
+import { useNavigate } from "react-router-dom"
+import { BsReceipt } from 'react-icons/bs'
+import { message } from "antd"
 
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
@@ -14,17 +13,15 @@ import { PageError } from "../../components/PageError"
 import { api } from "../../services/api"
 import { useAuth } from "../../contexts/auth"
 import { useCart } from '../../contexts/cart'
-import { useState } from 'react'
-import { useNavigate } from "react-router-dom"
 
-import { BsReceipt } from 'react-icons/bs'
 import logoPix from '../../assets/pix.svg'
 import cardImg from '../../assets/CreditCard.svg'
 import qrCode from '../../assets/qrcode.svg'
 import cartImg from '../../assets/cart.svg'
 import clock from '../../assets/clock.svg'
 import checkCircle from '../../assets/CheckCircle.svg'
-import { message } from "antd"
+
+import { Container, Content, PaymentCard } from "./styles.js"
 
 export function Cart() {
   const { user } = useAuth()
@@ -145,151 +142,148 @@ export function Cart() {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <GlobalStyles />
-      <Container>
-        <Header />
+    <Container>
+      <Header />
 
-        {user.isAdmin ?
-          <PageError />
-          :
-          <Content>
+      {user.isAdmin ?
+        <PageError />
+        :
+        <Content>
 
-            <div className="card-wrapper">
+          <div className="card-wrapper">
 
-              <div className="order-wrapper">
-                <h2>Meu pedido</h2>
-                <div className="details">
-                  {cart &&
-                    cart.map(item => (
-                      <OrderCard
-                        key={String(item.id)}
-                        data={item}
-                      />
-                    ))}
-                </div>
+            <div className="order-wrapper">
+              <h2>Meu pedido</h2>
+              <div className="details">
+                {cart &&
+                  cart.map(item => (
+                    <OrderCard
+                      key={String(item.id)}
+                      data={item}
+                    />
+                  ))}
+              </div>
 
-                <div className="total">
-                  <p>Total: R$<span>{total}</span></p>
+              <div className="total">
+                <p>Total: R$<span>{total}</span></p>
+              </div>
+            </div>
+
+            <PaymentCard>
+              <div className="paymentHeader">
+                <h2>Pagamento</h2>
+
+                <div className="buttons">
+                  <button className={pixActive === true ? 'active' : ''} disabled={disabledButton} onClick={handlePaymentPix}>
+                    <img src={logoPix} alt="Logo Pix" />
+                    PIX
+                  </button>
+
+                  <button className={creditActive === true ? 'active' : ''} disabled={disabledButton} onClick={handlePaymentCredit}>
+                    <img src={cardImg} alt="Logo Cartão de Crédito" />
+                    Crédito
+                  </button>
                 </div>
               </div>
 
-              <PaymentCard>
-                <div className="paymentHeader">
-                  <h2>Pagamento</h2>
+              <div className="paymentBody">
 
-                  <div className="buttons">
-                    <button className={pixActive === true ? 'active' : ''} disabled={disabledButton} onClick={handlePaymentPix}>
-                      <img src={logoPix} alt="Logo Pix" />
-                      PIX
-                    </button>
-
-                    <button className={creditActive === true ? 'active' : ''} disabled={disabledButton} onClick={handlePaymentCredit}>
-                      <img src={cardImg} alt="Logo Cartão de Crédito" />
-                      Crédito
-                    </button>
+                {isCartVisible &&
+                  <div className="cart" id="cart">
+                    <img src={cartImg} alt="Imagem do carrinho de compras" />
+                    <p>Selecione uma forma de pagamento acima!</p>
                   </div>
-                </div>
+                }
 
-                <div className="paymentBody">
-
-                  {isCartVisible &&
-                    <div className="cart" id="cart">
-                      <img src={cartImg} alt="Imagem do carrinho de compras" />
-                      <p>Selecione uma forma de pagamento acima!</p>
+                {isPixVisible &&
+                  <div className={pixActive === false ? 'active' : ''} id="paymentPix">
+                    <div className="qr">
+                      <img src={qrCode} alt="Imagem do QRCode" />
                     </div>
-                  }
 
-                  {isPixVisible &&
-                    <div className={pixActive === false ? 'active' : ''} id="paymentPix">
-                      <div className="qr">
-                        <img src={qrCode} alt="Imagem do QRCode" />
-                      </div>
+                    <Button
+                      title={loading ? "Finalizando pagamento" : "Finalizar pagamento"}
+                      disabled={loading}
+                      icon={BsReceipt}
+                      style={{ height: 56 }}
+                      className="finishPaymentButton"
+                      onClick={() => { handleFinishPayment(cart) }}
+                    />
+                  </div>
+                }
 
-                      <Button
-                        title={loading ? "Finalizando pagamento" : "Finalizar pagamento"}
-                        disabled={loading}
-                        icon={BsReceipt}
-                        style={{ height: 56 }}
-                        className="finishPaymentButton"
-                        onClick={() => { handleFinishPayment(cart) }}
+                {isCreditVisible &&
+
+                  <div className="paymentCredit" id="paymentCredit">
+                    <div className="inputs">
+                      <p>Número do Cartão</p>
+                      <Input
+                        placeholder="0000 0000 0000 0000"
+                        type="number"
+                        id="num"
+                        name="num"
+                        value={num}
+                        onChange={handleNumChange}
                       />
                     </div>
-                  }
 
-                  {isCreditVisible &&
-
-                    <div className="paymentCredit" id="paymentCredit">
-                      <div className="inputs">
-                        <p>Número do Cartão</p>
+                    <div className="validTo">
+                      <div>
+                        <p>Validade</p>
                         <Input
-                          placeholder="0000 0000 0000 0000"
-                          type="number"
-                          id="num"
-                          name="num"
-                          value={num}
-                          onChange={handleNumChange}
+                          placeholder="MM/AA"
+                          type="text"
+                          id="date"
+                          name="date"
+                          maxLength="5"
                         />
                       </div>
 
-                      <div className="validTo">
-                        <div>
-                          <p>Validade</p>
-                          <Input
-                            placeholder="MM/AA"
-                            type="text"
-                            id="date"
-                            name="date"
-                            maxLength="5"
-                          />
-                        </div>
-
-                        <div>
-                          <p>CVC</p>
-                          <Input
-                            placeholder="***"
-                            type="number"
-                            id="cvc"
-                            name="cvc"
-                            value={cvc}
-                            onChange={handleCvcChange}
-                          />
-                        </div>
+                      <div>
+                        <p>CVC</p>
+                        <Input
+                          placeholder="***"
+                          type="number"
+                          id="cvc"
+                          name="cvc"
+                          value={cvc}
+                          onChange={handleCvcChange}
+                        />
                       </div>
-
-                      <Button
-                        title={loading ? "Finalizando pagamento" : "Finalizar pagamento"}
-                        disabled={loading}
-                        icon={BsReceipt}
-                        style={{ height: 56 }}
-                        className="finishPaymentButton"
-                        onClick={() => { handleFinishPayment(cart) }}
-                      />
                     </div>
-                  }
 
-                  {isClockActive &&
+                    <Button
+                      title={loading ? "Finalizando pagamento" : "Finalizar pagamento"}
+                      disabled={loading}
+                      icon={BsReceipt}
+                      style={{ height: 56 }}
+                      className="finishPaymentButton"
+                      onClick={() => { handleFinishPayment(cart) }}
+                    />
+                  </div>
+                }
 
-                    <div className="clock" id="clock">
-                      <img src={clock} alt="Imagem do QRCode" />
-                      <p>Aguarde: Estamos processando o seu pagamento</p>
-                    </div>
-                  }
+                {isClockActive &&
 
-                  {isApprovedActive &&
+                  <div className="clock" id="clock">
+                    <img src={clock} alt="Imagem do QRCode" />
+                    <p>Aguarde: Estamos processando o seu pagamento</p>
+                  </div>
+                }
 
-                    <div className="approved" id="approved">
-                      <img src={checkCircle} alt="Imagem de pagamento aprovado" />
-                      <p>Oba! Pagamento aprovado! Em breve faremos a entrega!</p>
-                    </div>
-                  }
-                </div>
-              </PaymentCard>
-            </div>
-          </Content>
-        }
-        <Footer />
-      </Container>
-    </ThemeProvider>
+                {isApprovedActive &&
+
+                  <div className="approved" id="approved">
+                    <img src={checkCircle} alt="Imagem de pagamento aprovado" />
+                    <p>Oba! Pagamento aprovado! Em breve faremos a entrega!</p>
+                  </div>
+                }
+              </div>
+            </PaymentCard>
+          </div>
+        </Content>
+      }
+      <Footer />
+    </Container>
   )
 }

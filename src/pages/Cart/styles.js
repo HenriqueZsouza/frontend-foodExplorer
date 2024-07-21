@@ -150,6 +150,10 @@ export const PaymentCard = styled.div`
 
         .paymentCredit p {
             margin-bottom: 0.8rem;
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
+              -webkit-appearance: none;
+            }
         }
 
         .paymentPix {
