@@ -1,25 +1,24 @@
-import { useState } from 'react'
-import { message } from 'antd'
+import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { ThemeProvider } from 'styled-components'
+import { message } from "antd"
 
-import { Input } from '../../components/Input'
-import { Button } from '../../components/Button'
+import { Input } from "../../components/Input"
+import { Button } from "../../components/Button"
+
 import { api } from "../../services/api"
 
-import ThemeDefault from '../../styles/theme'
+import { ThemeProvider } from 'styled-components'
 import GlobalStyles from '../../styles/global'
+import darkTheme from '../../styles/theme'
 import { Container, Form, Logo } from "./styles"
 
-
-export const SignUp = () => {
-  const navigate = useNavigate()
-
+export function SignUp() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
 
+  const navigate = useNavigate()
 
   function handleBack() {
     navigate(-1)
@@ -27,47 +26,47 @@ export const SignUp = () => {
 
   function handleSignUp() {
     if (!name || !email || !password) {
-      return message.warning("Preencha todos os campos!")
+      return (
+        message.warning("Preencha todos os campos!")
+      )
     }
 
     setLoading(true)
 
     api.post("/users", { name, email, password })
       .then(() => {
-        message.warning("Usuário cadastrado com sucesso!")
+        message.success("Usuário cadastrado com sucesso!")
         navigate(-1)
         setLoading(false)
       })
       .catch(error => {
         if (error.response) {
-          message.error(error.response.data.message)
+          message.warning("Não foi possível cadastrar!")
         } else {
-          message.error("Não foi possível cadastrar")
+          console.error(error.response.data.message)
         }
-
         setLoading(false)
       })
   }
 
-
   return (
-    <ThemeProvider theme={ThemeDefault}>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
-      <Container >
+      <Container>
+
         <Logo>
           <div className="logo">
             <svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M13.0635 0.306641L25.7096 7.60782V22.2102L13.0635 29.5114L0.417527 22.2102V7.60782L13.0635 0.306641Z" fill="#065E7C" />
             </svg>
-            <h1>Food Explorer</h1>
+            <h1>food explorer</h1>
           </div>
         </Logo>
 
         <Form>
-
           <h2>Crie sua conta</h2>
 
-          <div className="input">
+          <div className="inputs">
             <p>Seu nome</p>
             <Input
               placeholder="Exemplo: Maria da Silva"
@@ -76,7 +75,7 @@ export const SignUp = () => {
             />
           </div>
 
-          <div className="input">
+          <div className="inputs">
             <p>Email</p>
             <Input
               placeholder="Exemplo: exemplo@exemplo.com.br"
@@ -85,7 +84,7 @@ export const SignUp = () => {
             />
           </div>
 
-          <div className="input">
+          <div className="inputs">
             <p>Senha</p>
             <Input
               placeholder="No mínimo 6 caracteres"
@@ -100,13 +99,12 @@ export const SignUp = () => {
             disabled={loading}
           />
 
-          <Link className="link" to="/"
-            onClick={handleBack}>
+          <Link onClick={handleBack}>
             Já tenho uma conta
           </Link>
 
         </Form>
-      </Container >
-    </ThemeProvider >
+      </Container>
+    </ThemeProvider>
   )
 }

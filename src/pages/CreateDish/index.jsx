@@ -1,29 +1,29 @@
-import { useState } from 'react'
-import { message } from 'antd'
-import { useNavigate, Link } from 'react-router-dom'
-
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { RiArrowLeftSLine } from 'react-icons/ri'
-import { FiUpload } from 'react-icons/fi'
-
-import { Header } from '../../components/Header'
-import { Footer } from '../../components/Footer'
-import { Button } from '../../components/Button'
-import { ButtonText } from '../../components/ButtonText'
-import { Input } from '../../components/Input'
-import { IngredientsTag } from '../../components/IngredientsTag'
-import { Textarea } from '../../components/Textarea'
-import { PageError } from "../../components/PageError"
-
-import { api } from '../../services/api'
-import { useAuth } from '../../contexts/auth.jsx'
+import { message } from "antd"
+import { FiUpload } from "react-icons/fi"
 import { ThemeProvider } from 'styled-components'
+
+import { useAuth } from "../../contexts/auth"
+
+import { Header } from "../../components/Header"
+import { Footer } from "../../components/Footer"
+import { Button } from "../../components/Button"
+import { ButtonText } from "../../components/ButtonText"
+import { Input } from "../../components/Input"
+import { IngredientsTag } from "../../components/IngredientsTag"
+import { Textarea } from "../../components/Textarea"
+import { PageError } from "../../components/PageError"
+import { api } from "../../services/api"
+
+import darkTheme from '../../styles/theme'
 import GlobalStyles from '../../styles/global'
-import ThemeDefault from '../../styles/theme.js'
-import { Container, Content, Form } from './styles.js'
+import { Container, Content, Form } from "./styles.js"
 
 export function CreateDish() {
-  const { user } = useAuth()
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   const [loading, setLoading] = useState(false)
   const [ingredients, setIngredients] = useState([])
@@ -36,7 +36,7 @@ export function CreateDish() {
 
   function handleAddIngredient() {
     if (newIngredient.length < 3) {
-      return message.message.warning("Você está tentando inserir um nome de ingrediente inválido!")
+      return message.warning("Você está tentando inserir um nome de ingrediente inválido!")
     } else {
       setIngredients(prevState => [...prevState, newIngredient])
       setNewIngredient("")
@@ -94,9 +94,9 @@ export function CreateDish() {
       .then(message.success("Prato adicionado com sucesso!"), navigate("/"))
       .catch((error) => {
         if (error.response) {
-          message.warning(error.response.data.message)
+          message.error("Erro ao criar o prato!")
         } else {
-          message.warning("Erro ao criar o prato!")
+          message.error(error.response.data.message)
         }
       })
 
@@ -104,13 +104,12 @@ export function CreateDish() {
   }
 
   return (
-    <ThemeProvider theme={ThemeDefault}>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <Container>
         <Header />
 
         {user.isAdmin ?
-
           <Content>
             <Form>
               <header>
@@ -150,19 +149,17 @@ export function CreateDish() {
                 <div>
                   <p>Ingredientes</p>
                   <div className="ingredients">
-                    {
-                      ingredients.map((ingredient, index) => (
-                        <IngredientsTag
-                          key={String(index)}
-                          value={ingredient}
-                          onClick={() => handleRemoveIngredient(ingredient)}
+                    {ingredients.map((ingredient, index) => (
+                      <IngredientsTag
+                        key={String(index)}
+                        value={ingredient}
+                        onClick={() => handleRemoveIngredient(ingredient)}
 
-                        />
-                      ))
-                    }
+                      />
+                    ))}
 
                     <IngredientsTag
-                      isnew
+                      isNew
                       placeholder="Adicionar"
                       onChange={e => setNewIngredient(e.target.value)}
                       value={newIngredient}
@@ -214,6 +211,7 @@ export function CreateDish() {
           :
           <PageError />
         }
+
         <Footer />
       </Container>
     </ThemeProvider>

@@ -1,4 +1,4 @@
-import { Container } from './styles'
+import { Container } from "./styles"
 
 import imagePlaceholder from '../../assets/image-not-found-icon.svg'
 
@@ -39,7 +39,7 @@ import sorvete from '../../assets/sorvete.png'
 import tomate from '../../assets/tomate.png'
 import whiskey from '../../assets/whiskey.png'
 
-export const Ingredients = ({ ingredient }) => {
+export function Ingredients({ ingredient }) {
 
   function fetchImageIngredient(name) {
     let ingredient = name.toLowerCase().trim()

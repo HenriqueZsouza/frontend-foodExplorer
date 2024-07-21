@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 export const Container = styled.div`
     display: flex;
@@ -127,6 +127,7 @@ export const PaymentCard = styled.div`
     }
 
     .paymentBody {
+
         width: 100%;
         max-width: 53.0rem;
         max-height: 48rem;
@@ -151,7 +152,6 @@ export const PaymentCard = styled.div`
             margin-bottom: 0.8rem;
         }
 
-        /* ==== QR Code Screen ==== */
         .paymentPix {
             text-align: center;
         }

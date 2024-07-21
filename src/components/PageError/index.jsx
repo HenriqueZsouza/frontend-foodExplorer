@@ -1,7 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { RiArrowLeftSLine } from 'react-icons/ri'
+import { Link } from "react-router-dom"
+
 import { ButtonText } from '../ButtonText'
+
 import imageError401 from '../../assets/401 Error Unauthorized.svg'
+
 import { Container } from './styles'
 
 export function PageError() {
@@ -23,7 +27,7 @@ export function PageError() {
         <img src={imageError401} alt="Imagem de erro 401: Acesso não autorizado" />
 
         <div>
-          <h2>Erro 401</h2>
+          <h2>Error 401</h2>
           <span>Ops!</span>
           <h3>Você não possuí autorização para acessar esta página!</h3>
         </div>

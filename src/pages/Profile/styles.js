@@ -1,38 +1,38 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 export const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    
-    width: 100%;
-    min-width: 32rem;
-    height: 100vh;
-    
-    overflow: auto;
-    overflow: overlay; 
+  display: flex;
+  flex-direction: column;
+  
+  width: 100%;
+  min-width: 32rem;
+  height: 100vh;
+  
+  overflow: auto;
+  overflow: overlay; 
 `
 
 export const Content = styled.div`
-    display: flex;
-    flex-direction: column;
-    
-    width: 100%;
-    max-width: 121.2rem;
-    margin: auto;
-    padding: 4rem;
-    
-    .card {
-        -webkit-box-shadow: 0px 0px 10px 5px #193746; 
-        box-shadow: 0px 0px 10px 5px #193746;
-        border-radius: 1rem;
-        margin-top: 4rem;
-    }
-    
-    @media only screen and (min-width: 768px) {
-        .card {
-            display: flex;
-        }
-    }
+  display: flex;
+  flex-direction: column;
+  
+  width: 100%;
+  max-width: 121.2rem;
+  margin: auto;
+  padding: 4rem;
+  
+  .card {
+      -webkit-box-shadow: 0px 0px 10px 5px #193746; 
+      box-shadow: 0px 0px 10px 5px #193746;
+      border-radius: 1rem;
+      margin-top: 4rem;
+  }
+  
+  @media only screen and (min-width: 768px) {
+      .card {
+          display: flex;
+      }
+  }
 `
 
 export const Form = styled.form`
@@ -101,8 +101,8 @@ export const Avatar = styled.div`
     margin: 0 3rem 3rem;
     
     > img {
-        width: 18rem;
-        height: 18rem;
+        width: 18.6rem;
+        height: 18.6rem;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid ${({ theme }) => theme.COLORS.BLUE};

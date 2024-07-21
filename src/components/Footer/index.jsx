@@ -1,14 +1,14 @@
-import { Container, Content, Logo } from './styles'
+import { Container, Content, Logo } from "./styles"
 import logo_gray from '../../assets/logo_gray.svg'
 
-export const Footer = () => {
+export function Footer() {
   return (
     <Container>
       <Content>
         <Logo>
           <div className="logo">
-            <img src={logo_gray} alt="logo" />
-            <span>food explorer</span>
+            <img src={logo_gray} alt="logo foodexplorer" />
+            <span>Food Explorer</span>
           </div>
         </Logo>
         <p>

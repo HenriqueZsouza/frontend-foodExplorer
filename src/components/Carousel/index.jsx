@@ -1,17 +1,17 @@
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Container, Content } from './styles'
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Navigation } from "swiper"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
 
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import { Container, Content } from "./styles"
 
-import { Navigation } from 'swiper'
-
-export const Carousel = ({ children }) => {
+export function Carousel({ children }) {
 
   return (
     <Container>
       <Content>
+
         <Swiper
           grabCursor={true}
           loop={true}
@@ -39,7 +39,9 @@ export const Carousel = ({ children }) => {
           className="mySwiper"
         >
           <SwiperSlide>{children}</SwiperSlide>
+
         </Swiper>
+
       </Content>
     </Container>
   )

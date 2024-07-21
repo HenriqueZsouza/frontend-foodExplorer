@@ -2,24 +2,25 @@ import { useState } from 'react'
 import { Link } from "react-router-dom"
 import { FiUser, FiMail, FiLock, FiCamera, FiShoppingBag, FiPlus } from 'react-icons/fi'
 import { BsWhatsapp } from 'react-icons/bs'
+import { ThemeProvider } from 'styled-components'
 
 import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
 import { Button } from '../../components/Button'
 
-import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
-import logo from '../../assets/logo.svg'
-
 import { api } from '../../services/api'
 import { useAuth } from '../../contexts/auth'
-import ThemeDefault from '../../styles/theme'
-import { ThemeProvider } from 'styled-components'
+
+import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
+import logo from '../../assets/logo.svg'
 import GlobalStyles from '../../styles/global'
+import darkTheme from '../../styles/theme'
 import { Container, Content, Form, Avatar, Infos, Logo } from './styles'
 
 export function Profile() {
 
   const { user, updateProfile, loading } = useAuth()
+
   const [name, setName] = useState(user.name)
   const [email, setEmail] = useState(user.email)
   const [passwordOld, setPasswordOld] = useState()
@@ -51,8 +52,7 @@ export function Profile() {
   }
 
   return (
-    <ThemeProvider theme={ThemeDefault}>
-
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <Container>
         <Header />
@@ -124,61 +124,63 @@ export function Profile() {
               />
             </Form>
 
-            {user.isAdmin ?
-              <Infos>
-                <Logo>
-                  <div className="logo">
-                    <img src={logo} alt="" />
-                  </div>
-                </Logo>
+            {
+              user.isAdmin ?
 
-                <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
+                <Infos>
+                  <Logo>
+                    <div className="logo">
+                      <img src={logo} alt="" />
+                    </div>
+                  </Logo>
 
-                <Link to="/orders">
+                  <p>Olá <span>{name}</span>, acesse a opção desejada:</p>
+
+                  <Link to="/orders">
+                    <Button
+                      title="Ver pedidos"
+                      icon={FiShoppingBag}
+                    />
+                  </Link>
+
+                  <Link to="/createdish">
+                    <Button
+                      title="Criar novo Prato"
+                      icon={FiPlus}
+                    />
+                  </Link>
+                </Infos>
+
+                :
+
+                <Infos>
+                  <Logo>
+                    <div className="logo">
+                      <img src={logo} alt="" />
+                    </div>
+                  </Logo>
+
+                  <p>Olá <span>{name}</span>, acesse a opção desejada:</p>
+
+                  <Link to="/orders">
+                    <Button
+                      title="Meus pedidos"
+                      icon={FiShoppingBag}
+                    />
+                  </Link>
+
                   <Button
-                    title="Ver pedidos"
-                    icon={FiShoppingBag}
+                    title="Contato por e-mail"
+                    icon={FiMail}
+                    onClick={() => window.location = 'mailto:contato@foodexplorer.com'}
                   />
-                </Link>
 
-                <Link to="/createdish">
                   <Button
-                    title="Criar novo Prato"
-                    icon={FiPlus}
+                    title="WhatsApp"
+                    icon={BsWhatsapp}
+                    onClick={() => window.open("https://api.whatsapp.com/send?phone=+999999999999&text=Oi pessoal do FoodExplorer! Gostaria de falar sobre o meu pedido!", '_blank')}
                   />
-                </Link>
-              </Infos>
-
-              :
-
-              <Infos>
-                <Logo>
-                  <div className="logo">
-                    <img src={logo} alt="" />
-                  </div>
-                </Logo>
-
-                <p>Olá <span>Nome</span>, acesse a opção desejada:</p>
-
-                <Link to="/orders">
-                  <Button
-                    title="Meus pedidos"
-                    icon={FiShoppingBag}
-                  />
-                </Link>
-
-                <Button
-                  title="Contato por e-mail"
-                  icon={FiMail}
-                  onClick={() => window.location = 'mailto:suporte@foodexplorer.com'}
-                />
-
-                <Button
-                  title="WhatsApp"
-                  icon={BsWhatsapp}
-                  onClick={() => window.open("https://api.whatsapp.com/send?phone=+999999999999&text=Oi pessoal do FoodExplorer! Gostaria de falar sobre o meu pedido!", '_blank')}
-                />
-              </Infos>
+                </Infos>
             }
           </div>
         </Content>

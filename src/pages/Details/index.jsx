@@ -1,44 +1,44 @@
 import { useState, useEffect } from "react"
 import { message } from "antd"
-import { useParams, Link, useNavigate } from 'react-router-dom'
-
+import { useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { ThemeProvider } from 'styled-components'
 import { RiArrowLeftSLine } from 'react-icons/ri'
 import { FiMinus, FiPlus } from 'react-icons/fi'
 import { BsReceipt } from 'react-icons/bs'
 
-import { Header } from '../../components/Header'
-import { Footer } from '../../components/Footer'
-import { ButtonText } from '../../components/ButtonText'
-import { Ingredients } from '../../components/Ingredients'
-import { Button } from '../../components/Button'
+
+import { Header } from "../../components/Header"
+import { Footer } from "../../components/Footer"
+import { ButtonText } from "../../components/ButtonText"
+import { Ingredients } from "../../components/Ingredients"
+import { Button } from "../../components/Button"
 
 import { api } from "../../services/api"
-import { useAuth } from "../../contexts/auth.jsx"
-import { useCart } from '../../contexts/cart.jsx'
+import { useAuth } from "../../contexts/auth"
+import { useCart } from '../../contexts/cart'
 
-import ThemeDefault from '../../styles/theme.js'
-import { ThemeProvider } from 'styled-components'
 import GlobalStyles from '../../styles/global'
-import { Container, Content, Ingredient, PurchaseCard } from './styles.js'
+import darkTheme from '../../styles/theme'
+import { Container, Content, Ingredient, PurchaseCard } from "./styles.js"
 
 export function Details() {
-
   const { user } = useAuth()
-
   const navigate = useNavigate()
+
+  const [data, setData] = useState(null)
+  const [quantity, setQuantity] = useState(1)
 
   function handleBack() {
     navigate(-1)
   }
 
-  const [data, setData] = useState(null)
   const params = useParams()
 
   const imageURL = data && `${api.defaults.baseURL}/files/${data.image}`
 
   const { handleAddDishToCart } = useCart()
-
-  const [quantity, setQuantity] = useState(1)
 
   const increase = () => {
     if (quantity > 19) {
@@ -63,16 +63,14 @@ export function Details() {
     }
 
     fetchDishDetail()
-  }, [params])
+  }, [])
 
   return (
-    <ThemeProvider theme={ThemeDefault}>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <Container>
         <Header />
-        {
-          data &&
-
+        {data &&
           <Content>
             <Link>
               <ButtonText
@@ -93,13 +91,12 @@ export function Details() {
                   <h3>{data.description}</h3>
 
                   <Ingredient>
-                    {
-                      data.ingredients.map(ingredient => (
-                        <Ingredients
-                          key={String(ingredient.id)}
-                          ingredient={ingredient.name}
-                        />
-                      ))
+                    {data.ingredients.map(ingredient => (
+                      <Ingredients
+                        key={String(ingredient.id)}
+                        ingredient={ingredient.name}
+                      />
+                    ))
                     }
                   </Ingredient>
 
@@ -107,43 +104,42 @@ export function Details() {
                     <h4>R$ {data.price}</h4>
 
                     <div className="purchaseCard">
-                      {
-                        user.isAdmin ?
+                      {user.isAdmin ?
 
-                          <PurchaseCard>
-                            {
-                              data &&
-                              <Link to={`/editdish/${data.id}`}>
-                                <Button
-                                  title="editar prato"
-                                  icon={BsReceipt}
-                                />
-                              </Link>
-                            }
-                          </PurchaseCard>
-
-                          :
-
-                          <PurchaseCard>
-                            <div className="counter">
-                              <ButtonText
-                                icon={FiMinus}
-                                onClick={decrease}
+                        <PurchaseCard>
+                          {
+                            data &&
+                            <Link to={`/editdish/${data.id}`}>
+                              <Button
+                                title="editar prato"
+                                icon={BsReceipt}
                               />
-                              <span>{quantity.toString().padStart(2, '0')}</span>
-                              <ButtonText
-                                icon={FiPlus}
-                                onClick={increase}
-                              />
-                            </div>
+                            </Link>
+                          }
+                        </PurchaseCard>
 
-                            <Button
-                              title="incluir"
-                              icon={BsReceipt}
-                              onClick={() => handleAddDishToCart(data, quantity, imageURL)}
-                              style={{ height: 56, width: 92, padding: '12px 4px' }}
+                        :
+
+                        <PurchaseCard>
+                          <div className="counter">
+                            <ButtonText
+                              icon={FiMinus}
+                              onClick={decrease}
                             />
-                          </PurchaseCard>
+                            <span>{quantity.toString().padStart(2, '0')}</span>
+                            <ButtonText
+                              icon={FiPlus}
+                              onClick={increase}
+                            />
+                          </div>
+
+                          <Button
+                            title="incluir"
+                            icon={BsReceipt}
+                            onClick={() => handleAddDishToCart(data, quantity, imageURL)}
+                            style={{ height: 56, width: 92, padding: '12px 4px' }}
+                          />
+                        </PurchaseCard>
                       }
                     </div>
                   </div>

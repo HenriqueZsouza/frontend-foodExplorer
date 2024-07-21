@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 export const Container = styled.div`
     display: flex;
@@ -38,7 +38,7 @@ export const Content = styled.div`
             justify-content: end;
         }
     }
-`;
+`
 
 export const Form = styled.form`
     display: flex;

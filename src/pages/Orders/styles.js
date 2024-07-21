@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 export const Container = styled.div`
     display: flex;
@@ -54,6 +54,9 @@ export const Table = styled.div`
         border: 2px solid ${({ theme }) => theme.COLORS.BLUE_300};
         border-radius: 0.8rem;
         border-collapse: collapse;
+
+        -webkit-box-shadow: 0px 0px 10px 5px #193746; 
+        box-shadow: 0px 0px 10px 5px #193746;
     }
 
     table * {

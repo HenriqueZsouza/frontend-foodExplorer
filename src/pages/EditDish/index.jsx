@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { RiArrowLeftSLine, FiCamera } from 'react-icons/ri'
-
-import GlobalStyles from '../../styles/global'
+import { RiArrowLeftSLine } from 'react-icons/ri'
+import { FiCamera } from "react-icons/fi"
+import { ThemeProvider } from 'styled-components'
 
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
@@ -18,25 +17,26 @@ import { PageError } from "../../components/PageError"
 
 import { api } from "../../services/api"
 import { useAuth } from "../../contexts/auth"
-import { ThemeProvider } from 'styled-components'
-import ThemeDefault from '../../styles/theme.js'
+
+import GlobalStyles from '../../styles/global'
+import darkTheme from '../../styles/theme'
 import { Container, Content, Form, Image } from "./styles.js"
 import { message } from "antd"
 
 export function EditDish() {
   const navigate = useNavigate()
-  const { user } = useAuth()
   const params = useParams()
+  const { user } = useAuth()
 
   const [loading, setLoading] = useState(false)
   const [loadingDelete, setLoadingDelete] = useState(false)
-  const [data, setData] = useState(null)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState("")
   const [category, setCategory] = useState("")
   const [ingredients, setIngredients] = useState([])
   const [newIngredient, setNewIngredient] = useState("")
+  const [data, setData] = useState(null)
   const [image, setImage] = useState()
   const [imageFile, setImageFile] = useState(null)
 
@@ -110,9 +110,9 @@ export function EditDish() {
       .then(message.success("Prato atualizado com sucesso!"), navigate("/"))
       .catch((error) => {
         if (error.response) {
-          message.error(error.response.data.message)
+          message.warning("Erro ao atualizar o prato!")
         } else {
-          message.error("Erro ao atualizar o prato!")
+          message.warning(error.response.data.message)
         }
       })
 
@@ -133,7 +133,7 @@ export function EditDish() {
     }
 
     fetchDish()
-  }, [params])
+  }, [])
 
   async function handleRemoveDish() {
     setLoadingDelete(true)
@@ -152,14 +152,16 @@ export function EditDish() {
   }
 
   return (
-    <ThemeProvider theme={ThemeDefault}>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <Container>
         <Header />
 
         {user.isAdmin ?
           <Content>
-            {data &&
+            {
+              data &&
+
               <Form>
                 <header>
                   <Link to="/">
@@ -282,9 +284,12 @@ export function EditDish() {
             </div>
 
           </Content>
+
           :
+
           <PageError />
         }
+
         <Footer />
       </Container>
     </ThemeProvider>

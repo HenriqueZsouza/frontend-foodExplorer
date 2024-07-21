@@ -1,14 +1,16 @@
 import { useEffect } from 'react'
+import { ThemeProvider } from 'styled-components'
+
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
+
 import { api } from '../../services/api'
 import { useAuth } from "../../contexts/auth"
 import { useCart } from '../../contexts/cart'
 
-import { ThemeProvider } from 'styled-components'
+import darkTheme from '../../styles/theme'
 import GlobalStyles from '../../styles/global'
-import ThemeDefault from '../../styles/theme'
-import { Container, Content, Table } from './styles.js'
+import { Container, Content, Table } from "./styles.js"
 
 export function Orders() {
   const { user } = useAuth()
@@ -21,7 +23,7 @@ export function Orders() {
     }
 
     fetchOrders()
-  }, [setOrders])
+  }, [])
 
   async function handleOrderStatus(order, event) {
     let statusSelected = event.target.value
@@ -29,7 +31,7 @@ export function Orders() {
     const cart = {
       id: order.id,
       orderStatus: statusSelected,
-    };
+    }
 
     await api.put("/orders", cart)
     location.reload()
@@ -48,12 +50,11 @@ export function Orders() {
   }
 
   return (
-    <ThemeProvider theme={ThemeDefault}>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <Container>
         <Header />
         <Content>
-
           <h1>Pedidos</h1>
 
           <Table>
@@ -73,7 +74,7 @@ export function Orders() {
                   <tr>
                     <td colSpan="4">
                       <div className="zeroOrders">
-                        <p>Não existem pedidos cadastrados!</p>
+                        <p>Não existem pedidos cadastrados ainda!</p>
                       </div>
                     </td>
                   </tr>

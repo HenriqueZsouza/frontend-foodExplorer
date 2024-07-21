@@ -1,6 +1,6 @@
-import { Container } from './styles'
+import { Container } from "./styles"
 
-export const ButtonText = ({ icon: Icon, title, ...rest }) => {
+export function ButtonText({ icon: Icon, title, ...rest }) {
   return (
     <Container
       type="button"

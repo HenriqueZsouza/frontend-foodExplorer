@@ -1,8 +1,8 @@
-import { Container } from './styles'
+import { Container } from "./styles"
 
-import { FiPlus, FiX } from 'react-icons/fi'
+import { FiPlus, FiX } from "react-icons/fi"
 
-export const IngredientsTag = ({ isNew, value, onClick, ...rest }) => {
+export function IngredientsTag({ isNew, value, onClick, ...rest }) {
   return (
     <Container isNew={isNew}>
       <input

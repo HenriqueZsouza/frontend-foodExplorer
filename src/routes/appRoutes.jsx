@@ -5,6 +5,7 @@ import { Cart } from '../pages/Cart'
 import { Orders } from '../pages/Orders'
 import { Profile } from '../pages/Profile'
 import { CreateDish } from '../pages/CreateDish'
+import { EditDish } from '../pages/EditDish'
 import { Details } from '../pages/Details'
 
 export function AppRoutes() {

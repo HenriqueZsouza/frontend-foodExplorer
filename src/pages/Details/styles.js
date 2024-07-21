@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const Container = styled.div`
     display: flex;
@@ -7,7 +7,7 @@ export const Container = styled.div`
     width: 100%;
     min-width: 35rem;
     height: 100vh;
-`;
+`
 
 export const Content = styled.div`
     display: flex;
@@ -134,12 +134,12 @@ export const Content = styled.div`
             }
         }
     }
-`;
+`
 
 export const Ingredient = styled.div`
     display: flex;
     gap: 1.6rem;
-`;
+`
 
 export const PurchaseCard = styled.div`
     display: flex;
@@ -169,4 +169,4 @@ export const PurchaseCard = styled.div`
         color: ${({ theme }) => theme.COLORS.BLUE};
         text-align: center;
     }
-`;
+`

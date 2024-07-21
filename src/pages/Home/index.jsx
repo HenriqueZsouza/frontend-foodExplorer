@@ -1,29 +1,27 @@
 import { useState, useEffect } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import Navigation from 'swiper'
+import { Swiper, SwiperSlide } from "swiper/react"
 import { ThemeProvider } from 'styled-components'
-
-import ThemeDefault from '../../styles/theme'
-import background from '../../assets/Mask group.png'
-
-import { Header } from '../../components/Header'
-import { Footer } from '../../components/Footer'
-import { Card } from '../../components/Card'
+import { Navigation } from "swiper"
+import "swiper/css"
+import "swiper/css/navigation"
 
 import { useFavorites } from '../../contexts/favorites'
 
+import { Header } from "../../components/Header"
+import { Footer } from "../../components/Footer"
+import { Card } from "../../components/Card"
+import background from "../../assets/Mask group.png"
 import { api } from '../../services/api'
+
 import GlobalStyles from '../../styles/global'
-import { Container, Content, Banner } from './styles'
+import darkTheme from '../../styles/theme'
+import { Container, Content, Banner } from "./styles.js"
 
-export const Home = () => {
-  const { favorites } = useFavorites()
-
+export function Home() {
   const [dishes, setDishes] = useState([])
   const [search, setSearch] = useState("")
 
+  const { favorites } = useFavorites()
   async function handleFavorites(favorite) {
     if (favorite.length === 0) {
       return
@@ -37,19 +35,16 @@ export const Home = () => {
       setDishes(response.data)
     }
     fetchDishes()
-  }, [search, favorites])
-
+  }, [search, favorites.length === 0])
 
   return (
-    <ThemeProvider theme={ThemeDefault}>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <Container>
         <Header search={setSearch} favoritesFilter={() => handleFavorites(favorites)} />
-
         <Content>
           <Banner>
             <img src={background} alt="Imagem de ingredientes" />
-
             <div className="banner">
               <div className="title">
                 <h1>Sabores inigualáveis</h1>
@@ -59,10 +54,9 @@ export const Home = () => {
           </Banner>
 
           <div className="cards">
-            <p>Refeições</p>
+            <p>Pratos principais</p>
 
-            {
-              dishes.filter(dish => dish.category == "dishes").length > 0 &&
+            {dishes.filter(dish => dish.category == "dishes").length > 0 &&
               <Swiper
                 grabCursor={true}
                 loop={true}
@@ -89,24 +83,21 @@ export const Home = () => {
                 modules={[Navigation]}
                 className="mySwiper"
               >
-                {
-                  dishes.filter(dish => dish.category == "dishes").map((item, index) => (
-                    <SwiperSlide
-                      key={String(index)}
-                    >
-                      <Card
-                        data={item}
-                      />
-                    </SwiperSlide>
-                  ))
-                }
+                {dishes.filter(dish => dish.category == "dishes").map((item, index) => (
+                  <SwiperSlide
+                    key={String(index)}
+                  >
+                    <Card
+                      data={item}
+                    />
+                  </SwiperSlide>
+                ))}
               </Swiper>
             }
 
             <p>Sobremesas</p>
 
-            {
-              dishes.filter(dish => dish.category == "dessert").length > 0 &&
+            {dishes.filter(dish => dish.category == "dessert").length > 0 &&
               <Swiper
                 grabCursor={true}
                 loop={true}
@@ -149,8 +140,7 @@ export const Home = () => {
 
             <p>Bebidas</p>
 
-            {
-              dishes.filter(dish => dish.category == "drinks").length > 0 &&
+            {dishes.filter(dish => dish.category == "drinks").length > 0 &&
               <Swiper
                 grabCursor={true}
                 loop={true}
@@ -178,21 +168,18 @@ export const Home = () => {
                 className="mySwiper"
               >
 
-                {
-                  dishes.filter(dish => dish.category == "drinks").map(dish => (
-                    <SwiperSlide
-                      key={String(dish.id)}
-                    >
-                      <Card
-                        data={dish}
-                      />
-                    </SwiperSlide>
-                  ))
-                }
+                {dishes.filter(dish => dish.category == "drinks").map(dish => (
+                  <SwiperSlide
+                    key={String(dish.id)}
+                  >
+                    <Card
+                      data={dish}
+                    />
+                  </SwiperSlide>
+                ))}
               </Swiper>
             }
           </div>
-
         </Content>
         <Footer />
       </Container>

@@ -1,47 +1,47 @@
+import { Container, Content, PaymentCard } from "./styles.js"
+
+import { ThemeProvider } from 'styled-components'
+import GlobalStyles from '../../styles/global'
+import darkTheme from '../../styles/theme'
+
+import { Header } from "../../components/Header"
+import { Footer } from "../../components/Footer"
+import { OrderCard } from "../../components/OrderCard"
+import { Input } from "../../components/Input"
+import { Button } from "../../components/Button"
+import { PageError } from "../../components/PageError"
+
+import { api } from "../../services/api"
+import { useAuth } from "../../contexts/auth"
+import { useCart } from '../../contexts/cart'
 import { useState } from 'react'
-import { message } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom"
+
 import { BsReceipt } from 'react-icons/bs'
-
-import { Header } from '../../components/Header'
-import { Footer } from '../../components/Footer'
-import { OrderCard } from '../../components/OrderCard'
-import { Input } from '../../components/Input'
-import { Button } from '../../components/Button'
-import { PageError } from '../../components/PageError'
-
 import logoPix from '../../assets/pix.svg'
 import cardImg from '../../assets/CreditCard.svg'
 import qrCode from '../../assets/qrcode.svg'
 import cartImg from '../../assets/cart.svg'
 import clock from '../../assets/clock.svg'
 import checkCircle from '../../assets/CheckCircle.svg'
+import { message } from "antd"
 
-import { useCart } from '../../contexts/cart'
-import { api } from '../../services/api'
-import { useAuth } from '../../contexts/auth'
-import ThemeDefault from '../../styles/theme.js'
-import { ThemeProvider } from 'styled-components'
-import GlobalStyles from '../../styles/global.js'
-import { Container, Content, PaymentCard } from './styles.js'
-
-
-export const Cart = () => {
+export function Cart() {
   const { user } = useAuth()
   const { cart, total, handleResetCart } = useCart()
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false)
-  const [num, setNum] = useState('')
-  const [cvc, setCvc] = useState('')
   const [isPixVisible, setIsPixVisible] = useState(false)
   const [isCreditVisible, setIsCreditVisible] = useState(false)
   const [isCartVisible, setIsCartVisible] = useState(true)
   const [pixActive, setPixActive] = useState(false)
   const [creditActive, setCreditActive] = useState(false)
   const [isClockActive, setIsClockActive] = useState(false)
-  const [disabledButton, setDisabledButton] = useState(false)
   const [isApprovedActive, setIsApprovedActive] = useState(false)
+  const [num, setNum] = useState('')
+  const [cvc, setCvc] = useState('')
+  const [disabledButton, setDisabledButton] = useState(false)
 
   function handleCreatedCart(cart) {
     return {
@@ -64,7 +64,7 @@ export const Cart = () => {
 
     if (cart.length < 1) {
       navigate(-1)
-      return message.warning("Ops! Seu carrinho está vazio. Adicione algo antes de tentar pagar.")
+      return message.warning("Seu carrinho está vazio. Adicione algo antes de tentar pagar.")
     }
 
     if (!pixActive && num.length < 16) {
@@ -89,13 +89,14 @@ export const Cart = () => {
           message.success("Pedido cadastrado com sucesso!")
           navigate(-1)
           handleResetCart()
+
         }, 7000)
       })
       .catch(error => {
         if (error.response) {
-          message.warning(error.response.data.message)
-        } else {
           message.warning("Não foi possível cadastrar")
+        } else {
+          message.warning(error.response.data.message)
         }
       })
 
@@ -139,11 +140,12 @@ export const Cart = () => {
     setTimeout(() => {
       setIsClockActive(false)
       setIsApprovedActive(true)
+
     }, 4000)
   }
 
   return (
-    <ThemeProvider theme={ThemeDefault}>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <Container>
         <Header />
@@ -152,20 +154,19 @@ export const Cart = () => {
           <PageError />
           :
           <Content>
+
             <div className="card-wrapper">
 
               <div className="order-wrapper">
                 <h2>Meu pedido</h2>
                 <div className="details">
-                  {
-                    cart &&
+                  {cart &&
                     cart.map(item => (
                       <OrderCard
                         key={String(item.id)}
                         data={item}
                       />
-                    ))
-                  }
+                    ))}
                 </div>
 
                 <div className="total">

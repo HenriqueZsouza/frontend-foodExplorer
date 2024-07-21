@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import { BsReceipt } from 'react-icons/bs'
 
-import { useCart } from '../../contexts/cart'
-import { useAuth } from "../../contexts/auth"
-
 import { Input } from "../Input"
 import { Button } from "../Button"
 
@@ -15,6 +12,9 @@ import checkCircle from '../../assets/CheckCircle.svg'
 import knife from '../../assets/knife.svg'
 import cart from '../../assets/cart.svg'
 
+import { useCart } from '../../contexts/cart'
+import { useAuth } from "../../contexts/auth"
+
 import { Container, Content } from "./styles"
 
 export function PaymentCard() {
@@ -23,6 +23,15 @@ export function PaymentCard() {
 
   const [num, setNum] = useState('')
   const [cvc, setCvc] = useState('')
+  const [isPixVisible, setIsPixVisible] = useState(false)
+  const [isCreditVisible, setIsCreditVisible] = useState(false)
+  const [isCartVisible, setIsCartVisible] = useState(true)
+  const [pixActive, setPixActive] = useState(false)
+  const [creditActive, setCreditActive] = useState(false)
+  const [isClockActive, setIsClockActive] = useState(false)
+  const [isApprovedActive, setIsApprovedActive] = useState(false)
+  const [disabledButton, setDisabledButton] = useState(false)
+
 
   const handleNumChange = event => {
     const limit = 16
@@ -34,13 +43,7 @@ export function PaymentCard() {
     setCvc(event.target.value.slice(0, limit))
   }
 
-  const [isPixVisible, setIsPixVisible] = useState(false)
-  const [isCreditVisible, setIsCreditVisible] = useState(false)
-  const [isCartVisible, setIsCartVisible] = useState(true)
-  const [pixActive, setPixActive] = useState(false)
-  const [creditActive, setCreditActive] = useState(false)
-  const [isClockActive, setIsClockActive] = useState(false)
-  const [isApprovedActive, setIsApprovedActive] = useState(false)
+
 
   const handlePix = () => {
     setIsPixVisible(true)
@@ -58,7 +61,6 @@ export function PaymentCard() {
     setPixActive(false)
   }
 
-  const [disabledButton, setDisabledButton] = useState(false)
   const btn = document.getElementById('finishPaymentButton')
   const disableButton = () => {
     setDisabledButton(true)
@@ -71,23 +73,30 @@ export function PaymentCard() {
     setTimeout(() => {
       setIsClockActive(false)
       setIsApprovedActive(true)
+
     }, 5000)
   }
 
   return (
     <Container>
+
       <div className="buttons">
+
         <button className={pixActive === true ? 'active' : ''} id="pix" disabled={disabledButton} onClick={handlePix}><img src={logoPix} alt="Logo Pix" />PIX</button>
+
         <button className={creditActive === true ? 'active' : ''} id="credit" disabled={disabledButton} onClick={handleCredit}><img src={cardImg} alt="Logo Cartão de Crédito" />Crédito</button>
+
       </div>
 
       <Content>
+
         {isCartVisible &&
           <div className="cart" id="cart">
             <img src={cart} alt="Imagem do carrinho de compras" />
             <p>Selecione uma forma de pagamento acima!</p>
           </div>
         }
+
         {isPixVisible &&
           <div className="paymentPix" id="paymentPix">
             <div className="qr">
@@ -165,7 +174,7 @@ export function PaymentCard() {
         {isApprovedActive &&
           <div className="approved" id="approved">
             <img src={checkCircle} alt="Imagem de pagamento aprovado" />
-            <p>Oba! Pagamento aprovado! Em breve faremos a entrega!</p>
+            <p>Seu pagamento aprovado! Em breve faremos a entrega!</p>
           </div>
         }
 
@@ -173,7 +182,9 @@ export function PaymentCard() {
           <img src={knife} alt="Imagem de uma faca e um garfo" />
           <p>O pedido foi entregue!</p>
         </div>
+
       </Content>
+
     </Container>
   )
 }
