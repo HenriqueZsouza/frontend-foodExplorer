@@ -1,42 +1,47 @@
+# 🥗 Food Explorer
+
+Bem-vindo ao repositório do Food Explorer! Este projeto é uma aplicação para explorar e gerenciar receitas de forma fácil e intuitiva.
+
 ## 🛠 Tecnologias
 
 As seguintes tecnologias foram utilizadas na criação deste projeto:
 
 - [ReactJs](https://reactjs.org)
-- [React Router Dom](https://react-icons.github.io/react-icons)
+- [React Router Dom](https://reactrouter.com)
 - [React Icons](https://react-icons.github.io/react-icons)
-- [Javascript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+- [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
 - [Vite](https://vitejs.dev)
 - [Axios](https://www.npmjs.com/package/axios)
 - [Swiper](https://swiperjs.com)
 - [Styled Components](https://styled-components.com)
-- [Ant Design](https://https://ant.design)
+- [Ant Design](https://ant.design)
 
-#### 💻 Executando aplicação
+## 💻 Executando a Aplicação
 
-# Instale as dependências necessárias
-$ npm install
+Para rodar a aplicação localmente, siga os passos abaixo:
 
-# Agora inicie o servidor
-$ npm run dev
+### Instale as dependências necessárias
+```bash
+npm install
+npm run dev
 
-# O terminal irá exibir o endereço local onde a aplicação está sendo executada. O endereço usado na criação do projeto foi este:
-  http://localhost:5173/
+O terminal exibirá o endereço local onde a aplicação está sendo executada. O endereço padrão é:
+http://localhost:5173/
 
-Aplicação só está disponível para rodar em localhost, para isso você precisa clonar o repositório do backend, disponivel em: 
+Nota: Caso queira rodar em localhost. Para isso, você precisa clonar o repositório do backend, disponível em:
+backend-foodExplorer
 
-  https://github.com/HenriqueZsouza/backend-foodExplorer
+Siga as instruções disponíveis no repositório!
 
-Siga as instruções disponiveis no repositório!
-
-#### 🔑 A aplicação já possui um usuário de teste criado com os seguintes dados para acesso:
-  e-mail: henrique@foodexplorer.com
-  senha: 1234567890
-
-#### 🔑 Quer ver como a aplicação funciona pelo Admin? Use a conta a seguir:
-  e-mail: admin@foodexplorer.com
-  senha: 1234567890
-
+🔑 Credenciais de Acesso
+Usuário de Teste
+E-mail: henrique@foodexplorer.com
+Senha: 1234567890
+Conta de Admin
+E-mail: admin@foodexplorer.com
+Senha: 1234567890
+🌐 Produção
 A versão em produção pode ser conferida no seguinte endereço:
+Food Explorer App
 
-https://app-foodexplorer.netlify.app/
+Aproveite a experiência! 🚀
