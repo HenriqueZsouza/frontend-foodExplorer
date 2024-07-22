@@ -36,3 +36,7 @@ Siga as instruções disponiveis no repositório!
 #### 🔑 Quer ver como a aplicação funciona pelo Admin? Use a conta a seguir:
   e-mail: admin@foodexplorer.com
   senha: 1234567890
+
+A versão em produção pode ser conferida no seguinte endereço:
+
+https://app-foodexplorer.netlify.app/
