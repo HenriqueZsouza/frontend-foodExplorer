@@ -30,7 +30,7 @@ O terminal exibirá o endereço local onde a aplicação está sendo executada. 
 http://localhost:5173/
 
 Nota: A aplicação só está disponível para rodar em localhost. Para isso, você precisa clonar o repositório do backend, disponível em:
-backend-foodExplorer
+https://github.com/HenriqueZsouza/backend-foodExplorer
 
 Siga as instruções disponíveis no repositório!
 
@@ -46,6 +46,6 @@ Senha: 1234567890
 
 🌐 Produção
 A versão em produção pode ser conferida no seguinte endereço:
-Food Explorer App
+https://app-foodexplorer.netlify.app/
 
 Aproveite a experiência! 🚀
