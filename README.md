@@ -29,7 +29,7 @@ npm run dev
 O terminal exibirá o endereço local onde a aplicação está sendo executada. O endereço padrão é:
 http://localhost:5173/
 
-Nota: A aplicação só está disponível para rodar em localhost. Para isso, você precisa clonar o repositório do backend, disponível em:
+Nota:Caso queira roda em localhost, você precisa clonar o repositório do backend, disponível em:
 [api-foodexplorer](https://github.com/HenriqueZsouza/backend-foodExplorer)
 
 Siga as instruções disponíveis no repositório!
