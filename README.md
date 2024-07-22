@@ -24,16 +24,18 @@ Para rodar a aplicação localmente, siga os passos abaixo:
 ```bash
 npm install
 npm run dev
+```
 
 O terminal exibirá o endereço local onde a aplicação está sendo executada. O endereço padrão é:
 http://localhost:5173/
 
-Nota: Caso queira rodar em localhost. Para isso, você precisa clonar o repositório do backend, disponível em:
-[backend-foodExplorer](https://github.com/HenriqueZsouza/backend-foodExplorer)
+Nota: A aplicação só está disponível para rodar em localhost. Para isso, você precisa clonar o repositório do backend, disponível em:
+backend-foodExplorer
 
 Siga as instruções disponíveis no repositório!
 
 🔑 Credenciais de Acesso
+
 Usuário de Teste
 E-mail: henrique@foodexplorer.com
 Senha: 1234567890
@@ -44,6 +46,6 @@ Senha: 1234567890
 
 🌐 Produção
 A versão em produção pode ser conferida no seguinte endereço:
-- [Food Explorer App](https://app-foodexplorer.netlify.app/)
+Food Explorer App
 
 Aproveite a experiência! 🚀
