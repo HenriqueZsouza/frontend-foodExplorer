@@ -33,7 +33,7 @@ export function CreateDish() {
 
   function handleAddIngredient() {
     if (newIngredient.length < 3) {
-      return message.warning("Você está tentando inserir um nome de ingrediente inválido!")
+      return message.warning("Nome de ingrediente inválido!")
     } else {
       setIngredients(prevState => [...prevState, newIngredient])
       setNewIngredient("")
@@ -46,11 +46,11 @@ export function CreateDish() {
 
   async function handleNewDish() {
     if (!image) {
-      return message.warning("Você não inseriu uma imagem para o prato!")
+      return message.warning("Insira uma imagem para o prato!")
     }
 
     if (!title) {
-      return message.warning("Você não informou o nome do prato!")
+      return message.warning("Informe o nome do prato!")
     }
 
     if (ingredients.length < 1) {
@@ -58,19 +58,19 @@ export function CreateDish() {
     }
 
     if (newIngredient) {
-      return message.warning("Você deixou um ingrediente no campo para adicionar, mas não clicou em adicionar. Clique no sinal de + para adicionar!")
+      return message.warning("Você deixou um ingrediente no campo para adicionar. Clique no sinal de + para adicionar!")
     }
 
     if (!category) {
-      return message.warning("Você não selecionou a categoria do prato!")
+      return message.warning("Selecione a categoria do prato!")
     }
 
     if (!price) {
-      return message.warning("Você não informou o preço do prato!")
+      return message.warning("Informe o preço do prato!")
     }
 
     if (!description) {
-      return message.warning("Você não informou uma descrição para o prato!")
+      return message.warning("Informe uma descrição para o prato!")
     }
 
     setLoading(true)

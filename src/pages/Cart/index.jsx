@@ -61,20 +61,20 @@ export function Cart() {
 
     if (cart.length < 1) {
       navigate(-1)
-      return message.warning("Seu pedido está vazio. Adicione algo antes de tentar pagar.")
+      return message.warning("Seu pedido está vazio!")
     }
 
     if (!pixActive && num.length < 16) {
-      message.warning("Número de cartão incompleto!")
+      message.warning("Número de cartão incorreto!")
       return
     }
 
     if (!pixActive && date.length < 4) {
-      return message.warning("Validade do cartão incompleta!")
+      return message.warning("Validade do cartão incorreta!")
     }
 
     if (!pixActive && cvc.length < 3) {
-      return message.warning("CVC do cartão incompleto!")
+      return message.warning("CVC do cartão incorreto!")
     }
 
     setLoading(true)

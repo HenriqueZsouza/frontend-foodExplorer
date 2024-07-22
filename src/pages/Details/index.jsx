@@ -39,7 +39,7 @@ export function Details() {
 
   const increase = () => {
     if (quantity > 19) {
-      message.warning("A quantidade máxima é de 20 unidades")
+      message.warning("A quantidade máxima é 20 unidades")
       return
     }
     setQuantity(count => count + 1)

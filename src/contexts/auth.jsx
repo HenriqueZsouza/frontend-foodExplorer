@@ -27,9 +27,9 @@ function AuthProvider({ children }) {
 
     } catch (error) {
       if (error.response) {
-        message.error("Email ou senha incorretos")
+        message.error("Email ou senha incorretos!")
       } else {
-        message.error("Não foi possível entrar.")
+        message.error("Não foi possível realizar login, tente novamente!")
       }
 
       setLoading(false)
