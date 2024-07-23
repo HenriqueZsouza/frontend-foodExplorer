@@ -8,7 +8,7 @@ export function Footer() {
         <Logo>
           <div className="logo">
             <img src={logo_gray} alt="logo foodexplorer" />
-            <span>Food Explorer</span>
+            <span>food explorer</span>
           </div>
         </Logo>
         <p>

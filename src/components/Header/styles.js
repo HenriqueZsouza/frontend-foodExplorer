@@ -205,7 +205,7 @@ export const ButtonStyle = styled.button`
   
   font-size: 1.4rem;
 
-  background-color: ${({ theme }) => theme.COLORS.BLUE};
+  background-color: ${({ theme }) => theme.COLORS.BACKGROUND_700};
   color: ${({ theme }) => theme.COLORS.WHITE};
 
   padding: 0 3rem;
@@ -223,7 +223,7 @@ export const Logout = styled(Link)`
   background: none;
   
   > svg {
-      color: ${({ theme }) => theme.COLORS.BLUE};
+      color: ${({ theme }) => theme.COLORS.WHITE};
       font-size: 3.2rem;
   }
 

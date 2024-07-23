@@ -26,7 +26,7 @@ export function Header({ search }) {
           <div className="logo">
             <Link to="/">
               <img src={logo} alt="" />
-              <h1>Food Explorer</h1>
+              <h1>food explorer</h1>
             </Link>
           </div>
         </Logo>
@@ -54,7 +54,6 @@ export function Header({ search }) {
               <Link to="/createdish">
                 <Button
                   title="Criar novo Prato"
-                  style={{ backgroundColor: '#92000E' }}
                   icon={FiPlus}
                 />
               </Link>

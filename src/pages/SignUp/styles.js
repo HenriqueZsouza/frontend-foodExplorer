@@ -45,7 +45,7 @@ export const Form = styled.form`
       margin-top: 3.2rem;
       
       text-align: center;
-      color: ${({ theme }) => theme.COLORS.BLUE};
+      color: ${({ theme }) => theme.COLORS.WHITE};
   }
 
   > .inputs {

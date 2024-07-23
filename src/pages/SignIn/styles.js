@@ -34,19 +34,19 @@ export const Form = styled.form`
   background-color: ${({ theme }) => theme.COLORS.BLUE_200};
 
   > h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 3.2rem;
-      font-weight: 500;
-      line-height: 6.8rem;
-      text-align: center;
-      margin-bottom: 3.2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 500;
+    line-height: 6.8rem;
+    text-align: center;
+    margin-bottom: 3.2rem;
   }
 
   > a {
       margin-top: 3.2rem;
       
       text-align: center;
-      color: ${({ theme }) => theme.COLORS.BLUE};
+      color: ${({ theme }) => theme.COLORS.WHITE};
   }
 
   > .inputs {
