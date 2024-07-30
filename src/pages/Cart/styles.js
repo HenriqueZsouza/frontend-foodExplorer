@@ -48,8 +48,6 @@ export const Content = styled.div`
         width: 180px;
         height: 64px;
         border-radius: 10px;
-
-        border: 1px solid white;
         background-color: ${({ theme }) => theme.COLORS.BLUE_300};
     }
 

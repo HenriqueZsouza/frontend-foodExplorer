@@ -32,9 +32,8 @@ export const Content = styled.div`
 
     .description h4 {
         margin: 2rem 0 2rem;
-        font-size: 3.2rem;
         line-height: 5.12rem;
-        color: ${({ theme }) => theme.COLORS.BLUE};
+        color: ${({ theme }) => theme.COLORS.WHITE};
     }
 
     .content {
@@ -65,8 +64,6 @@ export const Content = styled.div`
             text-align: center;
             white-space: nowrap;
             line-height: 5.6rem;
-
-            border: 1px solid white;
             background-color: ${({ theme }) => theme.COLORS.BLUE_300};
         }
 

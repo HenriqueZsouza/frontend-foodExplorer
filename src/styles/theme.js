@@ -15,7 +15,7 @@ export default {
     BLUE_400: "#091E26", /* 1ª cor de fundo do gradiente na Home*/
     BLUE_500: "#00131C", /* 2ª cor de fundo do gradiente na Home*/
 
-    GRAY_100: "#C4C4CC", /* or do texto das descrições*/
+    GRAY_100: "#C4C4CC", /* Cor do texto das descrições*/
     GRAY_200: "rgba(255, 255, 255, 0.3)", /*Cor do texto do Footer*/
     GRAY_300: "#7C7C8A", /*Cor do texto nos Inputs*/
     GRAY_400: "rgba(255, 255, 255, 0.05)", /*Cor dos botões de Pix e Cartão*/

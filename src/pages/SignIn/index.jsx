@@ -6,6 +6,7 @@ import { Button } from "../../components/Button"
 
 import { useAuth } from "../../contexts/auth"
 import { Container, Form, Logo } from "./styles"
+import { Spin } from "antd"
 
 export function SignIn() {
   const [email, setEmail] = useState("")
@@ -50,7 +51,7 @@ export function SignIn() {
         </div>
 
         <Button
-          title={loading ? "Entrando..." : "Entrar"}
+          title={loading ? <Spin color='#fff' /> : "Entrar"}
           onClick={handleSignIn}
           disabled={loading}
         />

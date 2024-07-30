@@ -57,7 +57,6 @@ export const Image = styled.div`
         height: 18.6rem;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid ${({ theme }) => theme.COLORS.BLUE};
     }
     
     > label {
@@ -74,7 +73,6 @@ export const Image = styled.div`
         
         background-color: ${({ theme }) => theme.COLORS.BLUE_500};
         border-radius: 50%;
-        border: 3px solid ${({ theme }) => theme.COLORS.BLUE};
 
         cursor: pointer;
 
@@ -158,7 +156,6 @@ export const Form = styled.form`
 
         border-radius: 0.5rem;
         border: none;
-        border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
 
         height: 4.8rem;
         width: 100%;
@@ -190,7 +187,6 @@ export const Form = styled.form`
             padding: 1.1rem 0.5rem;
             gap: 0.5rem;
             border-radius: 0.5rem;
-            border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
 
             background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
 
@@ -222,7 +218,6 @@ export const Form = styled.form`
         
         border-radius: 0.8rem;
         margin-bottom: 3.2rem;
-        border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
     }
 
     .ingredientsTag { 
@@ -270,7 +265,6 @@ export const Form = styled.form`
             margin-bottom: 0;
 
             border-radius: 0.8rem;
-            border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
         }
 
         .ingredientsTag { 

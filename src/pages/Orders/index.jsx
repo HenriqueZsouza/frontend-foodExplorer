@@ -1,12 +1,9 @@
 import { useEffect } from 'react'
-
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
-
 import { api } from '../../services/api'
 import { useAuth } from "../../contexts/auth"
 import { useCart } from '../../contexts/cart'
-
 import { Container, Content, Table } from "./styles.js"
 
 export function Orders() {
@@ -23,7 +20,7 @@ export function Orders() {
   }, [])
 
   async function handleOrderStatus(order, event) {
-    let statusSelected = event.target.value
+    const statusSelected = event.target.value
 
     const cart = {
       id: order.id,
@@ -37,13 +34,36 @@ export function Orders() {
   function formatDate(date) {
     const dateFormatted = new Date(date)
 
-    let monthFormatted = (dateFormatted.getMonth() + 1).toString()
-    monthFormatted = monthFormatted.length == 1 ? `0${monthFormatted}` : monthFormatted
-
-    let minutesFormatted = dateFormatted.getMinutes().toString()
-    minutesFormatted = minutesFormatted.length == 1 ? `0${minutesFormatted}` : minutesFormatted
+    const monthFormatted = (dateFormatted.getMonth() + 1).toString().padStart(2, '0')
+    const minutesFormatted = dateFormatted.getMinutes().toString().padStart(2, '0')
 
     return `${dateFormatted.getDate()}/${monthFormatted} às ${dateFormatted.getHours() - 3}h${minutesFormatted}`
+  }
+
+  const renderOrderRows = (orders, isAdmin) => {
+    return orders.map(order => (
+      <tr key={order.id}>
+        <td>
+          {isAdmin ? (
+            <select defaultValue={order.orderStatus} onChange={event => handleOrderStatus(order, event)}>
+              <option value="🟡 Pendente">🟡 Pendente</option>
+              <option value="🟠 Preparando">🟠 Preparando</option>
+              <option value="🟢 Entregue">🟢 Entregue</option>
+              <option value="🔴 Cancelado">🔴 Cancelado</option>
+            </select>
+          ) : (
+            order.orderStatus
+          )}
+        </td>
+        <td>0000{order.id}</td>
+        <td>
+          {order.items.map(item => (
+            <span key={item.title}>{item.quantity} x {item.title}, {" "}</span>
+          ))}
+        </td>
+        <td>{formatDate(order.created_at)}</td>
+      </tr>
+    ))
   }
 
   return (
@@ -63,8 +83,7 @@ export function Orders() {
               </tr>
             </thead>
 
-            {orders.length < 1 &&
-
+            {orders.length === 0 ? (
               <tbody>
                 <tr>
                   <td colSpan="4">
@@ -74,53 +93,11 @@ export function Orders() {
                   </td>
                 </tr>
               </tbody>
-            }
-
-            {
-              user.isAdmin ?
-
-                <tbody className="order">
-
-                  {orders &&
-                    orders.map(order => (
-                      <tr key={String(order.id)}>
-                        <td>
-                          <select defaultValue={order.orderStatus} onChange={event => handleOrderStatus(order, event)}>
-                            <option value="🟡 Pendente">🟡 Pendente</option>
-                            <option value="🟠 Preparando">🟠 Preparando</option>
-                            <option value="🟢 Entregue">🟢 Entregue</option>
-                            <option value="🔴 Cancelado">🔴 Cancelado</option>
-                          </select>
-                        </td>
-                        <td>0000{order.id}</td>
-                        <td>
-                          {order.items.map((item) => (
-                            <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
-                          ))}
-                        </td>
-                        <td>{formatDate(order.created_at)}</td>
-                      </tr>
-                    ))
-                  }
-                </tbody>
-                :
-                <tbody className="order">
-                  {orders &&
-                    orders.map(order => (
-                      <tr key={String(order.id)}>
-                        <td>{order.orderStatus}</td>
-                        <td>0000{order.id}</td>
-                        <td>
-                          {order.items.map((item) => (
-                            <span key={item.title}>{item.quantity} x {item.title} , {" "}</span>
-                          ))}
-                        </td>
-                        <td>{formatDate(order.created_at)}</td>
-                      </tr>
-                    ))
-                  }
-                </tbody>
-            }
+            ) : (
+              <tbody className="order">
+                {renderOrderRows(orders, user.isAdmin)}
+              </tbody>
+            )}
           </table>
         </Table>
       </Content>

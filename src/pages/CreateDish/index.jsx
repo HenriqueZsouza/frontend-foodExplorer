@@ -1,11 +1,10 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { RiArrowLeftSLine } from 'react-icons/ri'
+import { RiArrowLeftSLine } from "react-icons/ri"
 import { message } from "antd"
 import { FiUpload } from "react-icons/fi"
 
 import { useAuth } from "../../contexts/auth"
-
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
 import { Button } from "../../components/Button"
@@ -31,46 +30,35 @@ export function CreateDish() {
   const [category, setCategory] = useState("")
   const [image, setImage] = useState(null)
 
-  function handleAddIngredient() {
+  const validateForm = () => {
+    if (!image) return "Insira uma imagem para o prato!"
+    if (!title) return "Informe o nome do prato!"
+    if (ingredients.length < 1) return "Adicione pelo menos um ingrediente!"
+    if (newIngredient) return "Clique no sinal de + para adicionar o ingrediente!"
+    if (!category) return "Selecione a categoria do prato!"
+    if (!price) return "Informe o preço do prato!"
+    if (!description) return "Informe uma descrição para o prato!"
+    return null
+  }
+
+  const handleAddIngredient = () => {
     if (newIngredient.length < 3) {
-      return message.warning("Nome de ingrediente inválido!")
+      message.warning("Nome de ingrediente inválido!")
     } else {
-      setIngredients(prevState => [...prevState, newIngredient])
+      setIngredients([...ingredients, newIngredient])
       setNewIngredient("")
     }
   }
 
-  function handleRemoveIngredient(deleted) {
-    setIngredients(prevState => prevState.filter(ingredient => ingredient !== deleted))
+  const handleRemoveIngredient = (deleted) => {
+    setIngredients(ingredients.filter((ingredient) => ingredient !== deleted))
   }
 
-  async function handleNewDish() {
-    if (!image) {
-      return message.warning("Insira uma imagem para o prato!")
-    }
-
-    if (!title) {
-      return message.warning("Informe o nome do prato!")
-    }
-
-    if (ingredients.length < 1) {
-      return message.warning("Adicione pelo menos um ingrediente!")
-    }
-
-    if (newIngredient) {
-      return message.warning("Você deixou um ingrediente no campo para adicionar. Clique no sinal de + para adicionar!")
-    }
-
-    if (!category) {
-      return message.warning("Selecione a categoria do prato!")
-    }
-
-    if (!price) {
-      return message.warning("Informe o preço do prato!")
-    }
-
-    if (!description) {
-      return message.warning("Informe uma descrição para o prato!")
+  const handleNewDish = async () => {
+    const error = validateForm()
+    if (error) {
+      message.warning(error)
+      return
     }
 
     setLoading(true)
@@ -81,31 +69,24 @@ export function CreateDish() {
     formData.append("description", description)
     formData.append("category", category)
     formData.append("price", price)
+    ingredients.forEach((ingredient) => formData.append("ingredients", ingredient))
 
-    ingredients.map(ingredient => (
-      formData.append("ingredients", ingredient)
-    ))
-
-    await api
-      .post("/dishes", formData)
-      .then(message.success("Prato adicionado com sucesso!"), navigate("/"))
-      .catch((error) => {
-        if (error.response) {
-          message.error("Erro ao criar o prato!")
-        } else {
-          message.error(error.response.data.message)
-        }
-      })
-
-    setLoading(false)
+    try {
+      await api.post("/dishes", formData)
+      message.success("Prato adicionado com sucesso!")
+      navigate("/")
+    } catch (error) {
+      const errorMessage = error.response ? error.response.data.message : "Erro ao criar o prato!"
+      message.error(errorMessage)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-
     <Container>
       <Header />
-
-      {user.isAdmin ?
+      {user.isAdmin ? (
         <Content>
           <Form>
             <header>
@@ -114,7 +95,6 @@ export function CreateDish() {
               </Link>
               <h1>Criar prato</h1>
             </header>
-
             <div className="details">
               <div className="dishImage">
                 <p>Imagem do Prato</p>
@@ -127,74 +107,66 @@ export function CreateDish() {
                   id="image"
                   name="image"
                   accept="image/*"
-                  onChange={e => setImage(e.target.files[0])}
+                  onChange={(e) => setImage(e.target.files[0])}
                 />
               </div>
-
               <div className="dish">
                 <p>Nome do prato</p>
                 <Input
                   placeholder="Ex.: Salada Caesar"
                   type="text"
-                  onChange={e => setTitle(e.target.value)}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
             </div>
-
             <div className="ingredientsTag">
               <div>
                 <p>Ingredientes</p>
                 <div className="ingredients">
                   {ingredients.map((ingredient, index) => (
                     <IngredientsTag
-                      key={String(index)}
+                      key={index}
                       value={ingredient}
                       onClick={() => handleRemoveIngredient(ingredient)}
-
                     />
                   ))}
-
                   <IngredientsTag
                     isNew
                     placeholder="Adicionar"
-                    onChange={e => setNewIngredient(e.target.value)}
+                    onChange={(e) => setNewIngredient(e.target.value)}
                     value={newIngredient}
                     onClick={handleAddIngredient}
                   />
                 </div>
               </div>
-
               <div className="dishCategory">
                 <p>Categoria</p>
-
-                <select defaultValue={'default'} onChange={e => setCategory(e.target.value)}>
-                  <option value="default" disabled>Selecione a categoria</option>
+                <select defaultValue="default" onChange={(e) => setCategory(e.target.value)}>
+                  <option value="default" disabled>
+                    Selecione a categoria
+                  </option>
                   <option value="dishes">Pratos</option>
                   <option value="drinks">Bebidas</option>
                   <option value="dessert">Sobremesas</option>
                 </select>
               </div>
-
               <div className="price">
                 <p>Preço</p>
                 <Input
                   placeholder="R$ 00,00"
                   type="number"
-                  onChange={e => setPrice(e.target.value)}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
             </div>
-
             <div className="textarea">
               <p>Descrição</p>
               <Textarea
                 placeholder="Fale brevemente sobre o prato, seus ingredientes e composição"
-                onChange={e => setDescription(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-
           </Form>
-
           <div className="button">
             <Button
               title={loading ? "Salvando alterações" : "Salvar alterações"}
@@ -202,12 +174,10 @@ export function CreateDish() {
               disabled={loading}
             />
           </div>
-
         </Content>
-        :
+      ) : (
         <PageError />
-      }
-
+      )}
       <Footer />
     </Container>
   )

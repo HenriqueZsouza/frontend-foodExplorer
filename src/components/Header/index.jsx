@@ -6,7 +6,7 @@ import { Button } from '../Button'
 import { useCart } from '../../contexts/cart'
 import { useAuth } from '../../contexts/auth'
 import logo from '../../assets/logo.svg'
-import { Container, Content, Logo, Search, Logout, ButtonStyle, ButtonMenu, Profile } from "./styles"
+import { Container, Content, Logo, Search, Logout, ButtonStyle } from "./styles"
 
 export function Header({ search }) {
   const { user } = useAuth()

@@ -85,7 +85,6 @@ export const Form = styled.form`
 
     border-radius: 0.5rem;
     border: none;
-    border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
 
     height: 4.8rem;
     width: 100%;
@@ -117,7 +116,6 @@ export const Form = styled.form`
             padding: 1.1rem 0.5rem;
             gap: 0.5rem;
             border-radius: 0.5rem;
-            border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
 
             background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
 
@@ -192,7 +190,6 @@ export const Form = styled.form`
             margin-bottom: 0;
 
             border-radius: 0.8rem;
-            border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
         }
 
         .ingredientsTag { 
